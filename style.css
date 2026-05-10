@@ -687,8 +687,58 @@ h1, h2, h3, h4 {
     transform: translateY(0);
 }
 
+/* === ESCAPE GAME STYLES === */
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 19, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    text-align: center;
+    padding: 20px;
+}
+
+.escape-item {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    z-index: 4;
+}
+
+.d-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    touch-action: none;
+}
+.d-btn:active {
+    background: var(--primary-color);
+}
+
 /* === MEDIA QUERIES === */
 @media (max-width: 768px) {
+    #mobile-dpad {
+        display: flex !important;
+    }
+
     .navbar {
         padding: 15px 20px;
     }

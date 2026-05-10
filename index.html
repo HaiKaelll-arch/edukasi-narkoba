@@ -267,6 +267,64 @@
         </div>
     </section>
 
+    <!-- Mini Game 2: Escape From Drugs Section -->
+    <section id="escape-game" class="section">
+        <div class="section-header fade-in">
+            <h2>Game 2: <span class="text-glow">Escape From Drugs</span></h2>
+            <p>Bebaskan dirimu! Kumpulkan hal positif dan hindari narkoba yang mengejarmu!</p>
+        </div>
+        <div class="game-container glassmorphism fade-in">
+            <div class="game-header">
+                <div>Skor: <span id="escape-score">0</span> / 200 (Tertinggi: <span id="escape-highscore">0</span>)</div>
+                <div class="lives-container" style="color: var(--primary-color);">Nyawa: <span id="escape-lives">❤️❤️❤️</span></div>
+                <div>Waktu: <span id="escape-time">60</span>s</div>
+            </div>
+            <div class="game-controls" style="text-align: right; margin-bottom: 10px;">
+                <button id="escape-pause-btn" class="btn-primary" style="padding: 5px 15px; font-size: 0.9rem;"><i class="fa-solid fa-pause"></i> Pause</button>
+            </div>
+            
+            <div id="escape-board" style="position: relative; width: 100%; height: 400px; background-color: rgba(0,0,0,0.4); border-radius: 10px; overflow: hidden; border: 2px solid var(--glass-border); touch-action: none;">
+                <!-- Audio SFX -->
+                <audio id="sfx-collect" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3"></audio>
+                <audio id="sfx-hit" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_c6ccf3232f.mp3?filename=negative_beeps-6008.mp3"></audio>
+                
+                <!-- Overlays -->
+                <div id="escape-start-overlay" class="game-overlay">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 10px;">Escape From Drugs</h3>
+                    <p style="margin-bottom: 15px; padding: 0 20px;">Gunakan <b>WASD</b> / <b>Arah Panah</b> (atau tombol sentuh di HP) untuk bergerak.<br>Kumpulkan hal positif (+10) dan hindari narkoba! Nyawa berkurang jika terkena narkoba.</p>
+                    <button id="escape-start-btn" class="btn-primary glow-button">Mulai Main</button>
+                </div>
+                
+                <div id="escape-pause-overlay" class="game-overlay hidden" style="background: rgba(15,15,19,0.7);">
+                    <h3 style="font-size: 2rem;">Game Paused</h3>
+                    <button id="escape-resume-btn" class="btn-primary" style="margin-top: 15px;">Lanjutkan</button>
+                </div>
+
+                <div id="escape-over-overlay" class="game-overlay hidden">
+                    <h3 id="escape-over-title">Game Over!</h3>
+                    <p>Skor Akhir: <span id="escape-final-score">0</span></p>
+                    <p id="escape-message" class="text-glow" style="margin: 10px 0;">Jangan biarkan narkoba menghancurkan masa depanmu.</p>
+                    <button id="escape-restart-btn" class="btn-primary">Main Lagi</button>
+                </div>
+
+                <!-- Player Character -->
+                <div id="escape-player" style="position: absolute; width: 40px; height: 40px; background: var(--glass-bg); backdrop-filter: blur(5px); border: 2px solid #4cc9f0; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: #4cc9f0; box-shadow: 0 0 10px #4cc9f0; transition: transform 0.1s; z-index: 5; top: 50%; left: 50%; transform: translate(-50%, -50%);"><i class="fa-solid fa-face-smile"></i></div>
+            </div>
+            
+            <!-- Mobile D-pad -->
+            <div id="mobile-dpad" style="display: none; justify-content: center; margin-top: 20px; gap: 10px;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                    <button class="d-btn" id="d-up"><i class="fa-solid fa-arrow-up"></i></button>
+                    <div style="display: flex; gap: 30px;">
+                        <button class="d-btn" id="d-left"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="d-btn" id="d-right"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    <button class="d-btn" id="d-down"><i class="fa-solid fa-arrow-down"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">

@@ -422,4 +422,290 @@ document.addEventListener('DOMContentLoaded', () => {
         
         overOverlay.classList.remove('hidden');
     }
+
+    /* === ESCAPE FROM DRUGS GAME LOGIC === */
+    const escapeStartBtn = document.getElementById('escape-start-btn');
+    const escapeRestartBtn = document.getElementById('escape-restart-btn');
+    const escapePauseBtn = document.getElementById('escape-pause-btn');
+    const escapeResumeBtn = document.getElementById('escape-resume-btn');
+    const escapeStartOverlay = document.getElementById('escape-start-overlay');
+    const escapeOverOverlay = document.getElementById('escape-over-overlay');
+    const escapePauseOverlay = document.getElementById('escape-pause-overlay');
+    const escapeBoard = document.getElementById('escape-board');
+    const escapePlayer = document.getElementById('escape-player');
+    const escapeScoreDisplay = document.getElementById('escape-score');
+    const escapeTimeDisplay = document.getElementById('escape-time');
+    const escapeLivesDisplay = document.getElementById('escape-lives');
+    const escapeHighscoreDisplay = document.getElementById('escape-highscore');
+    const escapeFinalScore = document.getElementById('escape-final-score');
+    const escapeOverTitle = document.getElementById('escape-over-title');
+    const escapeMessage = document.getElementById('escape-message');
+    
+    const sfxCollect = document.getElementById('sfx-collect');
+    const sfxHit = document.getElementById('sfx-hit');
+
+    let escapeScore = 0;
+    let escapeTime = 60;
+    let escapeLives = 3;
+    let escapeHighscore = localStorage.getItem('escapeHighscore') || 0;
+    escapeHighscoreDisplay.innerText = escapeHighscore;
+    
+    let isEscapeRunning = false;
+    let isEscapePaused = false;
+    let escapeGameLoop;
+    let escapeSpawner;
+    let escapeTimer;
+    
+    let escPlayerX = 50; // percentage
+    let escPlayerY = 50; // percentage
+    let escPlayerSpeed = 1.0;
+    const keys = { w: false, a: false, s: false, d: false, ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false };
+    
+    const positiveItems = ['<i class="fa-solid fa-book"></i>', '<i class="fa-solid fa-bottle-water"></i>', '<i class="fa-solid fa-basketball"></i>', '<i class="fa-solid fa-music"></i>', '<i class="fa-solid fa-apple-whole"></i>'];
+    const negativeItems = ['<i class="fa-solid fa-pills"></i>', '<i class="fa-solid fa-syringe"></i>', '<i class="fa-solid fa-smoking"></i>'];
+    
+    let escEntities = [];
+
+    // Controls for keyboard
+    document.addEventListener('keydown', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = true; });
+    document.addEventListener('keyup', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = false; });
+    
+    // D-PAD controls
+    const dBtns = {
+        'd-up': 'ArrowUp', 'd-down': 'ArrowDown', 'd-left': 'ArrowLeft', 'd-right': 'ArrowRight'
+    };
+    for (let id in dBtns) {
+        let btn = document.getElementById(id);
+        if (btn) {
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[dBtns[id]] = true; }, {passive: false});
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[dBtns[id]] = false; }, {passive: false});
+            btn.addEventListener('mousedown', () => { keys[dBtns[id]] = true; });
+            btn.addEventListener('mouseup', () => { keys[dBtns[id]] = false; });
+            btn.addEventListener('mouseleave', () => { keys[dBtns[id]] = false; });
+        }
+    }
+
+    escapeStartBtn.addEventListener('click', initEscapeGame);
+    escapeRestartBtn.addEventListener('click', initEscapeGame);
+    escapePauseBtn.addEventListener('click', togglePauseEscape);
+    escapeResumeBtn.addEventListener('click', togglePauseEscape);
+
+    function initEscapeGame() {
+        isEscapeRunning = true;
+        isEscapePaused = false;
+        escapeScore = 0;
+        escapeTime = 60;
+        escapeLives = 3;
+        escPlayerX = 50;
+        escPlayerY = 50;
+        updateEscapeLives();
+        escapeScoreDisplay.innerText = escapeScore;
+        escapeTimeDisplay.innerText = escapeTime;
+        
+        escapeStartOverlay.classList.add('hidden');
+        escapeOverOverlay.classList.add('hidden');
+        escapePauseOverlay.classList.add('hidden');
+        escapePauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+        
+        // Clear entities
+        escEntities.forEach(ent => ent.element.remove());
+        escEntities = [];
+        
+        updateEscPlayerPos();
+        
+        clearInterval(escapeSpawner);
+        clearInterval(escapeTimer);
+        cancelAnimationFrame(escapeGameLoop);
+        
+        escapeTimer = setInterval(() => {
+            if (isEscapePaused) return;
+            escapeTime--;
+            escapeTimeDisplay.innerText = escapeTime;
+            if (escapeTime <= 0) {
+                endEscapeGame(escapeScore >= 200);
+            }
+        }, 1000);
+        
+        escapeSpawner = setInterval(spawnEscItem, 800);
+        escapeGameLoop = requestAnimationFrame(updateEscapeGame);
+    }
+
+    function togglePauseEscape() {
+        if (!isEscapeRunning) return;
+        isEscapePaused = !isEscapePaused;
+        if (isEscapePaused) {
+            escapePauseOverlay.classList.remove('hidden');
+            escapePauseBtn.innerHTML = '<i class="fa-solid fa-play"></i> Play';
+        } else {
+            escapePauseOverlay.classList.add('hidden');
+            escapePauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+            escapeGameLoop = requestAnimationFrame(updateEscapeGame); // Resume loop
+        }
+    }
+
+    function updateEscapeLives() {
+        escapeLivesDisplay.innerText = '❤️'.repeat(Math.max(0, escapeLives));
+    }
+
+    function updateEscPlayerPos() {
+        escapePlayer.style.left = `${escPlayerX}%`;
+        escapePlayer.style.top = `${escPlayerY}%`;
+    }
+
+    function spawnEscItem() {
+        if (isEscapePaused || !isEscapeRunning) return;
+        const item = document.createElement('div');
+        item.classList.add('escape-item');
+        
+        const isPositive = Math.random() > 0.4;
+        const type = isPositive ? 'positive' : 'negative';
+        
+        if (isPositive) {
+            item.innerHTML = positiveItems[Math.floor(Math.random() * positiveItems.length)];
+            item.style.color = 'var(--success-color)';
+        } else {
+            item.innerHTML = negativeItems[Math.floor(Math.random() * negativeItems.length)];
+            item.style.color = 'var(--primary-color)';
+        }
+        
+        // Random spawn location on borders
+        let spawnX, spawnY;
+        if (Math.random() > 0.5) {
+            spawnX = Math.random() > 0.5 ? -10 : 110;
+            spawnY = Math.random() * 100;
+        } else {
+            spawnX = Math.random() * 100;
+            spawnY = Math.random() > 0.5 ? -10 : 110;
+        }
+        
+        item.style.left = `${spawnX}%`;
+        item.style.top = `${spawnY}%`;
+        
+        escapeBoard.appendChild(item);
+        
+        escEntities.push({
+            element: item,
+            x: spawnX,
+            y: spawnY,
+            type: type,
+            speedX: (Math.random() - 0.5) * 0.8,
+            speedY: (Math.random() - 0.5) * 0.8,
+            isChasing: !isPositive && Math.random() > 0.6 // Some drugs chase the player
+        });
+    }
+
+    function updateEscapeGame() {
+        if (!isEscapeRunning || isEscapePaused) return;
+
+        // Player Movement
+        if (keys.w || keys.ArrowUp) escPlayerY = Math.max(5, escPlayerY - escPlayerSpeed);
+        if (keys.s || keys.ArrowDown) escPlayerY = Math.min(95, escPlayerY + escPlayerSpeed);
+        if (keys.a || keys.ArrowLeft) escPlayerX = Math.max(5, escPlayerX - escPlayerSpeed);
+        if (keys.d || keys.ArrowRight) escPlayerX = Math.min(95, escPlayerX + escPlayerSpeed);
+        updateEscPlayerPos();
+
+        const pRect = escapePlayer.getBoundingClientRect();
+
+        // Entity updates
+        for (let i = escEntities.length - 1; i >= 0; i--) {
+            const ent = escEntities[i];
+            
+            if (ent.isChasing) {
+                // Move towards player
+                const dx = escPlayerX - ent.x;
+                const dy = escPlayerY - ent.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist > 0) {
+                    ent.x += (dx / dist) * 0.3;
+                    ent.y += (dy / dist) * 0.3;
+                }
+            } else {
+                ent.x += ent.speedX;
+                ent.y += ent.speedY;
+            }
+            
+            ent.element.style.left = `${ent.x}%`;
+            ent.element.style.top = `${ent.y}%`;
+
+            // Collision
+            const eRect = ent.element.getBoundingClientRect();
+            if (isIntersecting(pRect, eRect, 5)) {
+                if (ent.type === 'positive') {
+                    escapeScore += 10;
+                    escapeScoreDisplay.innerText = escapeScore;
+                    playSound(sfxCollect);
+                    if (escapeScore >= 200) {
+                        endEscapeGame(true);
+                        return;
+                    }
+                } else {
+                    escapeLives--;
+                    updateEscapeLives();
+                    playSound(sfxHit);
+                    
+                    // Flash red
+                    escapeBoard.style.backgroundColor = 'rgba(230, 57, 70, 0.4)';
+                    setTimeout(() => { if(isEscapeRunning) escapeBoard.style.backgroundColor = 'rgba(0,0,0,0.4)'; }, 200);
+                    
+                    if (escapeLives <= 0) {
+                        endEscapeGame(false);
+                        return;
+                    }
+                }
+                
+                ent.element.remove();
+                escEntities.splice(i, 1);
+                continue;
+            }
+
+            // Remove out of bounds
+            if (ent.x < -20 || ent.x > 120 || ent.y < -20 || ent.y > 120) {
+                ent.element.remove();
+                escEntities.splice(i, 1);
+            }
+        }
+
+        escapeGameLoop = requestAnimationFrame(updateEscapeGame);
+    }
+
+    function playSound(audioElement) {
+        if (!audioElement) return;
+        audioElement.currentTime = 0;
+        audioElement.play().catch(e => {}); // Ignore error
+    }
+
+    function isIntersecting(rect1, rect2, shrink = 0) {
+        const r1 = { left: rect1.left + shrink, right: rect1.right - shrink, top: rect1.top + shrink, bottom: rect1.bottom - shrink };
+        const r2 = { left: rect2.left + shrink, right: rect2.right - shrink, top: rect2.top + shrink, bottom: rect2.bottom - shrink };
+        return !(r1.right < r2.left || r1.left > r2.right || r1.bottom < r2.top || r1.top > r2.bottom);
+    }
+
+    function endEscapeGame(isWin = false) {
+        isEscapeRunning = false;
+        clearInterval(escapeTimer);
+        clearInterval(escapeSpawner);
+        cancelAnimationFrame(escapeGameLoop);
+        
+        if (escapeScore > escapeHighscore) {
+            escapeHighscore = escapeScore;
+            localStorage.setItem('escapeHighscore', escapeHighscore);
+            escapeHighscoreDisplay.innerText = escapeHighscore;
+        }
+        
+        escapeFinalScore.innerText = escapeScore;
+        
+        if (isWin || escapeScore >= 200) {
+            escapeOverTitle.innerText = "Selamat! Kamu berhasil memilih hidup sehat.";
+            escapeOverTitle.style.color = "var(--success-color)";
+            escapeMessage.innerText = "Kamu telah membuktikan bahwa hidup tanpa narkoba jauh lebih indah!";
+            escapeMessage.style.color = "var(--success-color)";
+        } else {
+            escapeOverTitle.innerText = "Game Over!";
+            escapeOverTitle.style.color = "var(--primary-color)";
+            escapeMessage.innerText = "Jangan biarkan narkoba menghancurkan masa depanmu.";
+            escapeMessage.style.color = "var(--text-color)";
+        }
+        
+        escapeOverOverlay.classList.remove('hidden');
+    }
 });
