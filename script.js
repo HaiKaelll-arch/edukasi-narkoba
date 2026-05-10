@@ -436,7 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const escapeScoreDisplay = document.getElementById('escape-score');
     const escapeTimeDisplay = document.getElementById('escape-time');
     const escapeLivesDisplay = document.getElementById('escape-lives');
-    const escapeHighscoreDisplay = document.getElementById('escape-highscore');
     const escapeFinalScore = document.getElementById('escape-final-score');
     const escapeOverTitle = document.getElementById('escape-over-title');
     const escapeMessage = document.getElementById('escape-message');
@@ -447,8 +446,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let escapeScore = 0;
     let escapeTime = 60;
     let escapeLives = 3;
-    let escapeHighscore = localStorage.getItem('escapeHighscore') || 0;
-    escapeHighscoreDisplay.innerText = escapeHighscore;
     
     let isEscapeRunning = false;
     let isEscapePaused = false;
@@ -685,12 +682,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(escapeTimer);
         clearInterval(escapeSpawner);
         cancelAnimationFrame(escapeGameLoop);
-        
-        if (escapeScore > escapeHighscore) {
-            escapeHighscore = escapeScore;
-            localStorage.setItem('escapeHighscore', escapeHighscore);
-            escapeHighscoreDisplay.innerText = escapeHighscore;
-        }
         
         escapeFinalScore.innerText = escapeScore;
         
