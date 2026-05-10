@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edukasi Bahaya Narkoba | PIK-R JP ONE</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <h2>Memuat Edukasi...</h2>
+    </div>
+
+    <!-- Audio (Optional Backsound) -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Navbar -->
+    <nav class="navbar glassmorphism">
+        <div class="logo">
+            <h1><i class="fa-solid fa-shield-halved"></i> PIK-R JP ONE</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero">Beranda</a></li>
+            <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#golongan">Golongan</a></li>
+            <li><a href="#dampak">Dampak</a></li>
+            <li><a href="#pencegahan">Pencegahan</a></li>
+            <li><a href="#quiz">Quiz</a></li>
+            <li><a href="#game">Game</a></li>
+        </ul>
+        <div class="nav-controls">
+            <button id="audio-toggle" title="Play/Pause Music"><i class="fa-solid fa-volume-xmark"></i></button>
+            <button id="theme-toggle" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-content fade-in">
+            <div class="badge">Website by PIK-R JP ONE</div>
+            <h1 class="hero-title">Edukasi <span class="text-glow">Bahaya Narkoba</span></h1>
+            <p class="hero-subtitle">Kenali bahayanya, lindungi masa depanmu. Jangan biarkan narkoba merenggut mimpimu.</p>
+            <a href="#tentang" class="btn-primary glow-button">Mulai Belajar <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="hero-image fade-in">
+            <!-- Using FontAwesome as illustration -->
+            <i class="fa-solid fa-ban hero-icon pulse-animation"></i>
+        </div>
+    </section>
+
+    <!-- Tentang Section -->
+    <section id="tentang" class="section">
+        <div class="section-header fade-in">
+            <h2>Apa itu <span class="text-glow">Narkoba?</span></h2>
+            <p>Mari pahami musuh kita bersama.</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-card glassmorphism fade-in">
+                <i class="fa-solid fa-pills about-icon"></i>
+                <h3>Pengertian</h3>
+                <p>Narkoba (Narkotika dan Obat/Bahan Berbahaya) adalah zat yang jika dimasukkan ke dalam tubuh dapat mengubah pikiran, suasana hati, dan perilaku seseorang.</p>
+            </div>
+            <div class="about-card glassmorphism fade-in">
+                <i class="fa-solid fa-triangle-exclamation about-icon"></i>
+                <h3>Mengapa Berbahaya?</h3>
+                <p>Zat ini merusak sistem saraf otak, menyebabkan kecanduan parah, merusak organ tubuh vital, dan bisa berujung pada kematian.</p>
+            </div>
+            <div class="about-card glassmorphism fade-in">
+                <i class="fa-solid fa-users-rays about-icon"></i>
+                <h3>Siapa Korbannya?</h3>
+                <p>Narkoba tidak pandang bulu. Siapapun bisa menjadi korban, terutama remaja dan anak muda yang sedang mencari jati diri atau mengalami stres.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Golongan Section -->
+    <section id="golongan" class="section bg-darker">
+        <div class="section-header fade-in">
+            <h2>Golongan <span class="text-glow">Narkotika</span></h2>
+            <p>Kenali jenisnya agar tidak salah langkah.</p>
+        </div>
+        <div class="cards-container">
+            <div class="golongan-card glassmorphism fade-in">
+                <div class="card-badge golongan-1">Golongan I</div>
+                <h3>Paling Berbahaya</h3>
+                <ul>
+                    <li><strong>Pengertian:</strong> Hanya untuk ilmu pengetahuan, tidak untuk pengobatan. Potensi ketergantungan sangat tinggi.</li>
+                    <li><strong>Contoh:</strong> Ganja, Sabu-sabu, Kokain, Opium, Heroin.</li>
+                    <li><strong>Dampak:</strong> Halusinasi akut, kerusakan otak permanen, kematian.</li>
+                </ul>
+            </div>
+            <div class="golongan-card glassmorphism fade-in">
+                <div class="card-badge golongan-2">Golongan II</div>
+                <h3>Berbahaya</h3>
+                <ul>
+                    <li><strong>Pengertian:</strong> Bisa untuk pengobatan sebagai pilihan terakhir. Potensi ketergantungan tinggi.</li>
+                    <li><strong>Contoh:</strong> Morfin, Fentanil, Metadon.</li>
+                    <li><strong>Dampak:</strong> Depresi sistem pernapasan, penurunan kesadaran, koma.</li>
+                </ul>
+            </div>
+            <div class="golongan-card glassmorphism fade-in">
+                <div class="card-badge golongan-3">Golongan III</div>
+                <h3>Risiko Ringan</h3>
+                <ul>
+                    <li><strong>Pengertian:</strong> Banyak digunakan untuk pengobatan dan terapi. Potensi ketergantungan ringan.</li>
+                    <li><strong>Contoh:</strong> Kodein, Buprenorfin.</li>
+                    <li><strong>Dampak:</strong> Mual, pusing, konstipasi, tetap bisa memicu kecanduan jika disalahgunakan.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dampak Section -->
+    <section id="dampak" class="section">
+        <div class="section-header fade-in">
+            <h2>Bahaya & <span class="text-glow">Dampak</span></h2>
+            <p>Kehancuran di berbagai aspek kehidupan.</p>
+        </div>
+        <div class="impact-grid">
+            <div class="impact-item fade-in">
+                <div class="impact-icon"><i class="fa-solid fa-heart-crack"></i></div>
+                <div class="impact-content">
+                    <h4>Kesehatan Tubuh</h4>
+                    <p>Kerusakan organ seperti hati, paru-paru, jantung, dan risiko infeksi HIV/AIDS akibat jarum suntik.</p>
+                </div>
+            </div>
+            <div class="impact-item fade-in">
+                <div class="impact-icon"><i class="fa-solid fa-brain"></i></div>
+                <div class="impact-content">
+                    <h4>Mental & Psikologis</h4>
+                    <p>Memicu depresi berat, halusinasi, kecemasan berlebih (paranoid), hingga gangguan jiwa.</p>
+                </div>
+            </div>
+            <div class="impact-item fade-in">
+                <div class="impact-icon"><i class="fa-solid fa-handcuffs"></i></div>
+                <div class="impact-content">
+                    <h4>Dampak Sosial</h4>
+                    <p>Terkucilkan dari masyarakat, mendorong tindakan kriminal untuk membeli narkoba, hingga penjara.</p>
+                </div>
+            </div>
+            <div class="impact-item fade-in">
+                <div class="impact-icon"><i class="fa-solid fa-house-crack"></i></div>
+                <div class="impact-content">
+                    <h4>Keluarga</h4>
+                    <p>Menghancurkan keharmonisan keluarga, menguras ekonomi, dan membawa aib serta kesedihan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pencegahan Section -->
+    <section id="pencegahan" class="section bg-darker">
+        <div class="section-header fade-in">
+            <h2>Langkah <span class="text-glow">Pencegahan</span></h2>
+            <p>Lindungi dirimu mulai dari sekarang.</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="timeline-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="timeline-content glassmorphism">
+                    <h3>Pilih Pergaulan Sehat</h3>
+                    <p>Bertemanlah dengan orang-orang yang membawa pengaruh positif dan jauhi lingkungan toksik.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-icon"><i class="fa-solid fa-person-running"></i></div>
+                <div class="timeline-content glassmorphism">
+                    <h3>Aktif Kegiatan Positif</h3>
+                    <p>Isi waktu luang dengan olahraga, seni, organisasi, atau hobi yang bermanfaat.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                <div class="timeline-content glassmorphism">
+                    <h3>Berani Berkata "TIDAK"</h3>
+                    <p>Punya pendirian teguh untuk menolak segala bentuk tawaran narkoba dari siapapun.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="timeline-content glassmorphism">
+                    <h3>Cari Bantuan</h3>
+                    <p>Jika ada masalah atau terlanjur terjerumus, jangan takut cerita ke keluarga, guru, atau konselor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Motivasi Section -->
+    <section id="motivasi" class="section quotes-section">
+        <div class="quote-container fade-in">
+            <i class="fa-solid fa-quote-left quote-mark"></i>
+            <h2 id="quote-text" class="quote-text">Masa depan cerah dimulai dari hidup sehat.</h2>
+            <i class="fa-solid fa-quote-right quote-mark"></i>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="section">
+        <div class="section-header fade-in">
+            <h2>Uji <span class="text-glow">Pengetahuanmu</span></h2>
+            <p>Seberapa paham kamu tentang bahaya narkoba?</p>
+        </div>
+        <div class="quiz-container glassmorphism fade-in">
+            <div id="quiz-intro">
+                <h3>Quiz Interaktif Anti Narkoba</h3>
+                <p>Jawab 5 pertanyaan berikut untuk menguji pengetahuanmu!</p>
+                <button id="start-quiz-btn" class="btn-primary">Mulai Quiz</button>
+            </div>
+            <div id="quiz-area" class="hidden">
+                <div class="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <h3 id="question-text">Pertanyaan akan muncul di sini.</h3>
+                <div id="options-container" class="options-grid">
+                    <!-- Options injected by JS -->
+                </div>
+                <p id="feedback-message"></p>
+            </div>
+            <div id="quiz-result" class="hidden">
+                <h3>Hasil Quiz</h3>
+                <h1 id="score-text" class="text-glow">0/5</h1>
+                <p id="result-message"></p>
+                <button id="restart-quiz-btn" class="btn-primary">Main Lagi</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini Game Section -->
+    <section id="game" class="section bg-darker">
+        <div class="section-header fade-in">
+            <h2>Mini Game: <span class="text-glow">Pilih yang Sehat!</span></h2>
+            <p>Tangkap item positif (Buku, Apel, Musik) dan hindari Narkoba (Pil, Suntikan)!</p>
+        </div>
+        <div class="game-container glassmorphism fade-in">
+            <div class="game-header">
+                <div>Skor: <span id="game-score">0</span> / 150</div>
+                <div>Waktu: <span id="game-time">30</span>s</div>
+            </div>
+            <div id="game-board">
+                <div id="game-start-overlay">
+                    <button id="start-game-btn" class="btn-primary glow-button">Mulai Game</button>
+                </div>
+                <div id="game-over-overlay" class="hidden">
+                    <h3>Game Over!</h3>
+                    <p>Skor Akhir: <span id="final-score">0</span></p>
+                    <p id="game-message" class="text-glow">Hidup sehat tanpa narkoba!</p>
+                    <button id="restart-game-btn" class="btn-primary">Main Lagi</button>
+                </div>
+                <!-- Player -->
+                <div id="player"><i class="fa-solid fa-basket-shopping"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>PIK-R JP ONE</h2>
+                <p>Pusat Informasi dan Konseling Remaja</p>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PIK-R JP ONE. All Rights Reserved.</p>
+            <p class="small-text">Dibuat untuk Edukasi Pencegahan Narkoba.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
