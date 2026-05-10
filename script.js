@@ -403,10 +403,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         finalScore.innerText = gameScore;
         const msg = document.getElementById('game-message');
+        const title = document.getElementById('game-over-title');
+        
         if (gameScore >= 150) {
+            title.innerText = "Congratulations!";
+            title.style.color = "var(--success-color)";
             msg.innerText = "Selamat! Kamu mencapai target 150. Hidup sehat tanpa narkoba!";
             msg.style.color = 'var(--success-color)';
         } else {
+            title.innerText = "Game Over!";
+            title.style.color = "var(--text-color)";
             msg.innerText = "Waktu habis! Target 150 belum tercapai. Ayo coba lagi!";
             msg.style.color = 'var(--primary-color)';
         }
