@@ -522,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
             escapeTime--;
             escapeTimeDisplay.innerText = escapeTime;
             if (escapeTime <= 0) {
-                endEscapeGame(escapeScore >= 200);
+                endEscapeGame(escapeScore >= 150);
             }
         }, 1000);
         
@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = document.createElement('div');
         item.classList.add('escape-item');
         
-        const isPositive = Math.random() > 0.4;
+        const isPositive = Math.random() > 0.5;
         const type = isPositive ? 'positive' : 'negative';
         
         if (isPositive) {
@@ -634,7 +634,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     escapeScore += 10;
                     escapeScoreDisplay.innerText = escapeScore;
                     playSound(sfxCollect);
-                    if (escapeScore >= 200) {
+                    if (escapeScore >= 150) {
                         endEscapeGame(true);
                         return;
                     }
@@ -694,7 +694,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         escapeFinalScore.innerText = escapeScore;
         
-        if (isWin || escapeScore >= 200) {
+        if (isWin || escapeScore >= 150) {
             escapeOverTitle.innerText = "Selamat! Kamu berhasil memilih hidup sehat.";
             escapeOverTitle.style.color = "var(--success-color)";
             escapeMessage.innerText = "Kamu telah membuktikan bahwa hidup tanpa narkoba jauh lebih indah!";
