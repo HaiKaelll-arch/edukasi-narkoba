@@ -251,21 +251,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Touch movement for mobile
-    let touchStartX = 0;
-    gameBoard.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-    
+    // Pointer movement (Touch & Mouse)
     gameBoard.addEventListener('touchmove', e => {
         if(isGameOver) return;
-        let touchX = e.changedTouches[0].screenX;
+        handlePointerMove(e.changedTouches[0].clientX);
+    }, {passive: true});
+
+    gameBoard.addEventListener('mousemove', e => {
+        if(isGameOver) return;
+        handlePointerMove(e.clientX);
+    });
+
+    function handlePointerMove(clientX) {
         let boardRect = gameBoard.getBoundingClientRect();
-        let relX = touchX - boardRect.left;
+        let relX = clientX - boardRect.left;
         playerPos = (relX / boardRect.width) * 100;
         playerPos = Math.max(5, Math.min(95, playerPos));
         updatePlayerPos();
-    }, {passive: true});
+    }
 
     function updatePlayerPos() {
         player.style.left = `${playerPos}%`;
@@ -406,9 +409,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = document.getElementById('game-over-title');
         
         if (gameScore >= 150) {
-            title.innerText = "Congratulations!";
+            title.innerText = "selamat kamu hebat >_<";
             title.style.color = "var(--success-color)";
-            msg.innerText = "Selamat! Kamu mencapai target 150. Hidup sehat tanpa narkoba!";
+            msg.innerText = "Target tercapai! Hidup sehat tanpa narkoba!";
             msg.style.color = 'var(--success-color)';
         } else {
             title.innerText = "Game Over!";
