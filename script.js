@@ -80,14 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const quoteText = document.getElementById('quote-text');
     let quoteIndex = 0;
 
-    setInterval(() => {
-        quoteText.style.opacity = 0;
-        setTimeout(() => {
-            quoteIndex = (quoteIndex + 1) % quotes.length;
-            quoteText.innerText = quotes[quoteIndex];
-            quoteText.style.opacity = 1;
-        }, 500);
-    }, 4000);
+    if (quoteText) {
+        setInterval(() => {
+            quoteText.style.opacity = 0;
+            setTimeout(() => {
+                quoteIndex = (quoteIndex + 1) % quotes.length;
+                quoteText.innerText = quotes[quoteIndex];
+                quoteText.style.opacity = 1;
+            }, 500);
+        }, 4000);
+    }
 
     /* === QUIZ LOGIC === */
     const quizData = [
@@ -115,8 +117,92 @@ document.addEventListener('DOMContentLoaded', () => {
             question: "Jika teman menawarkan narkoba, sikap yang benar adalah?",
             options: ["Menerima karena tidak enak", "Menolak dengan tegas", "Menyimpannya untuk nanti", "Meminta bayaran"],
             correct: 1
+        },
+        {
+            question: "Apa yang dimaksud dengan rehabilitasi narkoba?",
+            options: ["Hukuman penjara bagi pengguna", "Proses pemulihan fisik dan mental pecandu", "Pelatihan untuk memproduksi obat", "Tempat berkumpulnya pengedar"],
+            correct: 1
+        },
+        {
+            question: "Efek samping yang sangat umum dari penggunaan sabu-sabu adalah?",
+            options: ["Sangat mengantuk dan rileks", "Nafsu makan meningkat pesat", "Hiperaktif, sulit tidur, dan paranoid", "Tubuh menjadi lebih kebal penyakit"],
+            correct: 2
+        },
+        {
+            question: "Di Indonesia, lembaga pemerintah yang khusus menangani masalah narkoba adalah?",
+            options: ["KPK", "BMKG", "BNN", "BIN"],
+            correct: 2
+        },
+        {
+            question: "Apa hukuman maksimal bagi pengedar narkoba kelas berat di Indonesia?",
+            options: ["Denda 1 juta rupiah", "Kerja sosial", "Penjara 1 tahun", "Hukuman mati"],
+            correct: 3
+        },
+        {
+            question: "Mengapa remaja dianggap rentan terhadap penyalahgunaan narkoba?",
+            options: ["Karena remaja selalu punya banyak uang", "Karena remaja sedang mencari jati diri dan mudah terpengaruh", "Karena remaja kebal terhadap penyakit", "Karena narkoba baik untuk pertumbuhan"],
+            correct: 1
+        },
+        {
+            question: "Gejala 'sakau' atau putus zat terjadi karena?",
+            options: ["Tubuh kekurangan vitamin", "Tubuh sudah sangat ketergantungan pada narkoba", "Tubuh terlalu banyak istirahat", "Tubuh alergi terhadap makanan tertentu"],
+            correct: 1
+        },
+        {
+            question: "Peran utama keluarga dalam pencegahan narkoba adalah?",
+            options: ["Memberikan dukungan moral, kasih sayang, dan edukasi", "Membiarkan anak melakukan apa saja", "Memberikan uang jajan tanpa batas", "Menghukum anak setiap saat"],
+            correct: 0
+        },
+        {
+            question: "Menghisap lem (ngelem) termasuk dalam bentuk penyalahgunaan?",
+            options: ["Zat Inhalan", "Narkotika Golongan I", "Psikotropika", "Minuman Keras"],
+            correct: 0
+        },
+        {
+            question: "Apa ciri-ciri fisik yang sering terlihat pada pengguna berat narkoba?",
+            options: ["Kulit bersinar dan sehat", "Berat badan naik drastis", "Mata merah muda, pupil berubah, dan berat badan turun drastis", "Rambut tumbuh lebih cepat"],
+            correct: 2
+        },
+        {
+            question: "Apa tujuan utama dari penyuluhan bahaya narkoba?",
+            options: ["Mengajarkan cara membuat obat", "Mencegah penyalahgunaan narkoba sejak dini", "Mempromosikan jenis narkoba baru", "Mengurangi jam pelajaran di sekolah"],
+            correct: 1
+        },
+        {
+            question: "Bagaimana sikap kita jika mengetahui teman menggunakan narkoba?",
+            options: ["Mencoba ikut-ikutan", "Menjauhinya selamanya", "Melaporkan ke guru atau orang dewasa agar ia ditolong", "Meminta uang tutup mulut"],
+            correct: 2
+        },
+        {
+            question: "Minuman keras atau alkohol berlebihan termasuk ke dalam kelompok?",
+            options: ["Zat Adiktif lainnya", "Narkotika", "Psikotropika", "Obat bebas terbatas"],
+            correct: 0
+        },
+        {
+            question: "Jarum suntik yang dipakai bergantian oleh pengguna narkoba berisiko menularkan penyakit apa?",
+            options: ["Asma", "Diabetes", "HIV/AIDS dan Hepatitis", "Maag"],
+            correct: 2
+        },
+        {
+            question: "Obat resep dokter yang disalahgunakan tanpa resep untuk penenang biasanya digolongkan sebagai?",
+            options: ["Vitamin C", "Psikotropika", "Antibiotik", "Suplemen diet"],
+            correct: 1
+        },
+        {
+            question: "Masa depan tanpa narkoba berarti?",
+            options: ["Hidup membosankan", "Tubuh sehat, mental kuat, dan siap meraih mimpi", "Kehilangan teman", "Tidak bisa bahagia"],
+            correct: 1
         }
     ];
+
+    let currentQuizSet = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
     const startQuizBtn = document.getElementById('start-quiz-btn');
     const restartQuizBtn = document.getElementById('restart-quiz-btn');
@@ -135,8 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let score = 0;
     let canClick = true;
 
-    startQuizBtn.addEventListener('click', startQuiz);
-    restartQuizBtn.addEventListener('click', startQuiz);
+    if (startQuizBtn) {
+        startQuizBtn.addEventListener('click', startQuiz);
+        restartQuizBtn.addEventListener('click', startQuiz);
+    }
 
     function startQuiz() {
         currentQuestion = 0;
@@ -144,17 +232,22 @@ document.addEventListener('DOMContentLoaded', () => {
         quizIntro.classList.add('hidden');
         quizResult.classList.add('hidden');
         quizArea.classList.remove('hidden');
+        
+        let shuffled = [...quizData];
+        shuffleArray(shuffled);
+        currentQuizSet = shuffled.slice(0, 10);
+        
         loadQuestion();
     }
 
     function loadQuestion() {
         canClick = true;
         feedbackMsg.innerText = '';
-        const q = quizData[currentQuestion];
+        const q = currentQuizSet[currentQuestion];
         questionText.innerText = `${currentQuestion + 1}. ${q.question}`;
         
         // Update progress
-        progressBar.style.width = `${(currentQuestion / quizData.length) * 100}%`;
+        progressBar.style.width = `${(currentQuestion / currentQuizSet.length) * 100}%`;
         
         // Load options
         optionsContainer.innerHTML = '';
@@ -171,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!canClick) return;
         canClick = false;
 
-        const correctIndex = quizData[currentQuestion].correct;
+        const correctIndex = currentQuizSet[currentQuestion].correct;
         const options = optionsContainer.children;
 
         if (selectedIndex === correctIndex) {
@@ -188,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             currentQuestion++;
-            if (currentQuestion < quizData.length) {
+            if (currentQuestion < currentQuizSet.length) {
                 loadQuestion();
             } else {
                 showResults();
@@ -201,9 +294,9 @@ document.addEventListener('DOMContentLoaded', () => {
         quizResult.classList.remove('hidden');
         progressBar.style.width = '100%';
         
-        scoreText.innerText = `${score} / ${quizData.length}`;
+        scoreText.innerText = `${score} / ${currentQuizSet.length}`;
         
-        if (score === quizData.length) {
+        if (score === currentQuizSet.length) {
             resultMsg.innerText = "Keren! Kamu sangat memahami bahaya narkoba. Pertahankan!";
         } else if (score >= 3) {
             resultMsg.innerText = "Bagus! Pengetahuanmu cukup baik, terus tingkatkan kewaspadaan.";
@@ -236,31 +329,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const positiveIcons = ['<i class="fa-solid fa-book"></i>', '<i class="fa-solid fa-apple-whole"></i>', '<i class="fa-solid fa-music"></i>', '<i class="fa-solid fa-dumbbell"></i>'];
     const negativeIcons = ['<i class="fa-solid fa-pills"></i>', '<i class="fa-solid fa-syringe"></i>', '<i class="fa-solid fa-smoking"></i>'];
 
-    startGameBtn.addEventListener('click', initGame);
-    restartGameBtn.addEventListener('click', initGame);
+    if (startGameBtn) {
+        startGameBtn.addEventListener('click', initGame);
+        restartGameBtn.addEventListener('click', initGame);
 
-    // Player movement
-    document.addEventListener('keydown', (e) => {
-        if (isGameOver) return;
-        if (e.key === 'ArrowLeft') {
-            playerPos = Math.max(5, playerPos - 10);
-            updatePlayerPos();
-        } else if (e.key === 'ArrowRight') {
-            playerPos = Math.min(95, playerPos + 10);
-            updatePlayerPos();
-        }
-    });
+        // Player movement
+        document.addEventListener('keydown', (e) => {
+            if (isGameOver) return;
+            if (e.key === 'ArrowLeft') {
+                playerPos = Math.max(5, playerPos - 10);
+                updatePlayerPos();
+            } else if (e.key === 'ArrowRight') {
+                playerPos = Math.min(95, playerPos + 10);
+                updatePlayerPos();
+            }
+        });
 
-    // Pointer movement (Touch & Mouse)
-    gameBoard.addEventListener('touchmove', e => {
-        if(isGameOver) return;
-        handlePointerMove(e.changedTouches[0].clientX);
-    }, {passive: true});
+        // Pointer movement (Touch & Mouse)
+        gameBoard.addEventListener('touchmove', e => {
+            if(isGameOver) return;
+            handlePointerMove(e.changedTouches[0].clientX);
+        }, {passive: true});
 
-    gameBoard.addEventListener('mousemove', e => {
-        if(isGameOver) return;
-        handlePointerMove(e.clientX);
-    });
+        gameBoard.addEventListener('mousemove', e => {
+            if(isGameOver) return;
+            handlePointerMove(e.clientX);
+        });
+    }
 
     function handlePointerMove(clientX) {
         let boardRect = gameBoard.getBoundingClientRect();
@@ -464,28 +559,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let escEntities = [];
 
     // Controls for keyboard
-    document.addEventListener('keydown', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = true; });
-    document.addEventListener('keyup', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = false; });
-    
-    // D-PAD controls
-    const dBtns = {
-        'd-up': 'ArrowUp', 'd-down': 'ArrowDown', 'd-left': 'ArrowLeft', 'd-right': 'ArrowRight'
-    };
-    for (let id in dBtns) {
-        let btn = document.getElementById(id);
-        if (btn) {
-            btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[dBtns[id]] = true; }, {passive: false});
-            btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[dBtns[id]] = false; }, {passive: false});
-            btn.addEventListener('mousedown', () => { keys[dBtns[id]] = true; });
-            btn.addEventListener('mouseup', () => { keys[dBtns[id]] = false; });
-            btn.addEventListener('mouseleave', () => { keys[dBtns[id]] = false; });
+    if (escapeStartBtn) {
+        document.addEventListener('keydown', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = true; });
+        document.addEventListener('keyup', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = false; });
+        
+        // D-PAD controls
+        const dBtns = {
+            'd-up': 'ArrowUp', 'd-down': 'ArrowDown', 'd-left': 'ArrowLeft', 'd-right': 'ArrowRight'
+        };
+        for (let id in dBtns) {
+            let btn = document.getElementById(id);
+            if (btn) {
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[dBtns[id]] = true; }, {passive: false});
+                btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[dBtns[id]] = false; }, {passive: false});
+                btn.addEventListener('mousedown', () => { keys[dBtns[id]] = true; });
+                btn.addEventListener('mouseup', () => { keys[dBtns[id]] = false; });
+                btn.addEventListener('mouseleave', () => { keys[dBtns[id]] = false; });
+            }
         }
-    }
 
-    escapeStartBtn.addEventListener('click', initEscapeGame);
-    escapeRestartBtn.addEventListener('click', initEscapeGame);
-    escapePauseBtn.addEventListener('click', togglePauseEscape);
-    escapeResumeBtn.addEventListener('click', togglePauseEscape);
+        escapeStartBtn.addEventListener('click', initEscapeGame);
+        escapeRestartBtn.addEventListener('click', initEscapeGame);
+        escapePauseBtn.addEventListener('click', togglePauseEscape);
+        escapeResumeBtn.addEventListener('click', togglePauseEscape);
+    }
 
     function initEscapeGame() {
         isEscapeRunning = true;
@@ -554,7 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = document.createElement('div');
         item.classList.add('escape-item');
         
-        const isPositive = Math.random() > 0.5;
+        const isPositive = Math.random() < (64 / 109);
         const type = isPositive ? 'positive' : 'negative';
         
         if (isPositive) {
