@@ -18,16 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
     /* === THEME TOGGLE === */
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
-    let isDark = true;
+    let isDark = false;
 
     themeToggle.addEventListener('click', () => {
         isDark = !isDark;
         if (isDark) {
+            body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        } else {
             body.removeAttribute('data-theme');
             themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
-        } else {
-            body.setAttribute('data-theme', 'light');
-            themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
         }
     });
 
@@ -415,11 +415,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (isPositive) {
             item.innerHTML = positiveIcons[Math.floor(Math.random() * positiveIcons.length)];
-            item.style.color = '#2a9d8f'; // Success color
+            item.style.color = '#27ae60'; // Success color
             item.dataset.type = 'positive';
         } else {
             item.innerHTML = negativeIcons[Math.floor(Math.random() * negativeIcons.length)];
-            item.style.color = '#e63946'; // Danger color
+            item.style.color = '#c0392b'; // Danger color
             item.dataset.type = 'negative';
         }
 
@@ -454,8 +454,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     gameScore -= 20; // Penalty for negative
                     // Visual feedback for hitting drug
-                    gameBoard.style.backgroundColor = 'rgba(230, 57, 70, 0.3)';
-                    setTimeout(() => gameBoard.style.backgroundColor = 'rgba(0,0,0,0.2)', 200);
+                    gameBoard.style.backgroundColor = 'rgba(192, 57, 43, 0.3)';
+                    setTimeout(() => gameBoard.style.backgroundColor = 'rgba(41, 128, 185, 0.08)', 200);
                 }
                 scoreDisplay.innerText = gameScore;
                 
@@ -651,15 +651,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = document.createElement('div');
         item.classList.add('escape-item');
         
-        const isPositive = Math.random() < (64 / 109);
+        const isPositive = Math.random() < 0.65;
         const type = isPositive ? 'positive' : 'negative';
         
         if (isPositive) {
             item.innerHTML = positiveItems[Math.floor(Math.random() * positiveItems.length)];
-            item.style.color = 'var(--success-color)';
+            item.style.color = 'var(--primary-color)';
         } else {
             item.innerHTML = negativeItems[Math.floor(Math.random() * negativeItems.length)];
-            item.style.color = 'var(--primary-color)';
+            item.style.color = '#c0392b';
         }
         
         // Random spawn location on borders
@@ -738,8 +738,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     playSound(sfxHit);
                     
                     // Flash red
-                    escapeBoard.style.backgroundColor = 'rgba(230, 57, 70, 0.4)';
-                    setTimeout(() => { if(isEscapeRunning) escapeBoard.style.backgroundColor = 'rgba(0,0,0,0.4)'; }, 200);
+                    escapeBoard.style.backgroundColor = 'rgba(192, 57, 43, 0.4)';
+                    setTimeout(() => { if(isEscapeRunning) escapeBoard.style.backgroundColor = 'rgba(41, 128, 185, 0.12)'; }, 200);
                     
                     if (escapeLives <= 0) {
                         endEscapeGame(false);
