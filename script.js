@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rootMargin: "0px 0px -50px 0px"
     };
 
-    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+    const appearOnScroll = new IntersectionObserver(function (entries, observer) {
         entries.forEach(entry => {
             if (!entry.isIntersecting) return;
             entry.target.classList.add('appear');
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizData = [
         {
             question: "Apa singkatan dari Narkoba?",
-            options: ["Narkotika dan Obat Berbahaya", "Narkotika dan Bahan Kimia", "Narkoba dan Obat-obatan", "Narkotika dan Obat Bebas"],
+            options: ["Narkotika, psikotropika, dan zat adiktif lainnya", "Narkotika dan Bahan Kimia", "Narkoba dan Obat-obatan", "Narkotika dan Obat Bebas"],
             correct: 0
         },
         {
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizIntro = document.getElementById('quiz-intro');
     const quizArea = document.getElementById('quiz-area');
     const quizResult = document.getElementById('quiz-result');
-    
+
     const questionText = document.getElementById('question-text');
     const optionsContainer = document.getElementById('options-container');
     const progressBar = document.getElementById('progress-bar');
@@ -232,11 +232,11 @@ document.addEventListener('DOMContentLoaded', () => {
         quizIntro.classList.add('hidden');
         quizResult.classList.add('hidden');
         quizArea.classList.remove('hidden');
-        
+
         let shuffled = [...quizData];
         shuffleArray(shuffled);
         currentQuizSet = shuffled.slice(0, 10);
-        
+
         loadQuestion();
     }
 
@@ -245,10 +245,10 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackMsg.innerText = '';
         const q = currentQuizSet[currentQuestion];
         questionText.innerText = `${currentQuestion + 1}. ${q.question}`;
-        
+
         // Update progress
         progressBar.style.width = `${(currentQuestion / currentQuizSet.length) * 100}%`;
-        
+
         // Load options
         optionsContainer.innerHTML = '';
         q.options.forEach((opt, index) => {
@@ -293,9 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
         quizArea.classList.add('hidden');
         quizResult.classList.remove('hidden');
         progressBar.style.width = '100%';
-        
+
         scoreText.innerText = `${score} / ${currentQuizSet.length}`;
-        
+
         if (score === currentQuizSet.length) {
             resultMsg.innerText = "Keren! Kamu sangat memahami bahaya narkoba. Pertahankan!";
         } else if (score >= 3) {
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreDisplay = document.getElementById('game-score');
     const timeDisplay = document.getElementById('game-time');
     const finalScore = document.getElementById('final-score');
-    
+
     let gameInterval;
     let itemInterval;
     let timerInterval;
@@ -347,12 +347,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Pointer movement (Touch & Mouse)
         gameBoard.addEventListener('touchmove', e => {
-            if(isGameOver) return;
+            if (isGameOver) return;
             handlePointerMove(e.changedTouches[0].clientX);
-        }, {passive: true});
+        }, { passive: true });
 
         gameBoard.addEventListener('mousemove', e => {
-            if(isGameOver) return;
+            if (isGameOver) return;
             handlePointerMove(e.clientX);
         });
     }
@@ -377,10 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
         timeDisplay.innerText = timeLeft;
         playerPos = 50;
         updatePlayerPos();
-        
+
         startOverlay.classList.add('hidden');
         overOverlay.classList.add('hidden');
-        
+
         // Clear items
         const existingItems = document.querySelectorAll('.game-item');
         existingItems.forEach(item => item.remove());
@@ -392,10 +392,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function startGameLoop() {
         // Spawn items
         itemInterval = setInterval(spawnItem, 800);
-        
+
         // Game loop
         gameInterval = setInterval(updateGame, 50);
-        
+
         // Timer
         timerInterval = setInterval(() => {
             timeLeft--;
@@ -407,12 +407,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function spawnItem() {
-        if(isGameOver) return;
+        if (isGameOver) return;
         const item = document.createElement('div');
         item.classList.add('game-item');
-        
+
         const isPositive = Math.random() > 0.4; // 60% positive
-        
+
         if (isPositive) {
             item.innerHTML = positiveIcons[Math.floor(Math.random() * positiveIcons.length)];
             item.style.color = '#27ae60'; // Success color
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startX = Math.random() * 90 + 5;
         item.style.left = `${startX}%`;
         item.style.top = `-30px`;
-        
+
         gameBoard.appendChild(item);
         itemsList.push({
             element: item,
@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Check collision
             const itemRect = itemObj.element.getBoundingClientRect();
-            
+
             if (isColliding(playerRect, itemRect)) {
                 if (itemObj.element.dataset.type === 'positive') {
                     gameScore += 10;
@@ -458,10 +458,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => gameBoard.style.backgroundColor = 'rgba(41, 128, 185, 0.08)', 200);
                 }
                 scoreDisplay.innerText = gameScore;
-                
+
                 itemObj.element.remove();
                 itemsList.splice(i, 1);
-                
+
                 if (gameScore >= 150) {
                     endGame();
                 }
@@ -487,10 +487,10 @@ document.addEventListener('DOMContentLoaded', () => {
             top: rect2.top + 5, bottom: rect2.bottom - 5
         };
 
-        return !(r1.right < r2.left || 
-                 r1.left > r2.right || 
-                 r1.bottom < r2.top || 
-                 r1.top > r2.bottom);
+        return !(r1.right < r2.left ||
+            r1.left > r2.right ||
+            r1.bottom < r2.top ||
+            r1.top > r2.bottom);
     }
 
     function endGame() {
@@ -498,11 +498,11 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(gameInterval);
         clearInterval(itemInterval);
         clearInterval(timerInterval);
-        
+
         finalScore.innerText = gameScore;
         const msg = document.getElementById('game-message');
         const title = document.getElementById('game-over-title');
-        
+
         if (gameScore >= 150) {
             title.innerText = "selamat kamu hebat >_<";
             title.style.color = "var(--success-color)";
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
             msg.innerText = "Waktu habis! Target 150 belum tercapai. Ayo coba lagi!";
             msg.style.color = 'var(--primary-color)';
         }
-        
+
         overOverlay.classList.remove('hidden');
     }
 
@@ -534,35 +534,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const escapeFinalScore = document.getElementById('escape-final-score');
     const escapeOverTitle = document.getElementById('escape-over-title');
     const escapeMessage = document.getElementById('escape-message');
-    
+
     const sfxCollect = document.getElementById('sfx-collect');
     const sfxHit = document.getElementById('sfx-hit');
 
     let escapeScore = 0;
     let escapeTime = 60;
     let escapeLives = 3;
-    
+
     let isEscapeRunning = false;
     let isEscapePaused = false;
     let escapeGameLoop;
     let escapeSpawner;
     let escapeTimer;
-    
+
     let escPlayerX = 50; // percentage
     let escPlayerY = 50; // percentage
     let escPlayerSpeed = 1.0;
     const keys = { w: false, a: false, s: false, d: false, ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false };
-    
+
     const positiveItems = ['<i class="fa-solid fa-book"></i>', '<i class="fa-solid fa-bottle-water"></i>', '<i class="fa-solid fa-basketball"></i>', '<i class="fa-solid fa-music"></i>', '<i class="fa-solid fa-apple-whole"></i>'];
     const negativeItems = ['<i class="fa-solid fa-pills"></i>', '<i class="fa-solid fa-syringe"></i>', '<i class="fa-solid fa-smoking"></i>'];
-    
+
     let escEntities = [];
 
     // Controls for keyboard
     if (escapeStartBtn) {
         document.addEventListener('keydown', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = true; });
         document.addEventListener('keyup', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = false; });
-        
+
         // D-PAD controls
         const dBtns = {
             'd-up': 'ArrowUp', 'd-down': 'ArrowDown', 'd-left': 'ArrowLeft', 'd-right': 'ArrowRight'
@@ -570,8 +570,8 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let id in dBtns) {
             let btn = document.getElementById(id);
             if (btn) {
-                btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[dBtns[id]] = true; }, {passive: false});
-                btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[dBtns[id]] = false; }, {passive: false});
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[dBtns[id]] = true; }, { passive: false });
+                btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[dBtns[id]] = false; }, { passive: false });
                 btn.addEventListener('mousedown', () => { keys[dBtns[id]] = true; });
                 btn.addEventListener('mouseup', () => { keys[dBtns[id]] = false; });
                 btn.addEventListener('mouseleave', () => { keys[dBtns[id]] = false; });
@@ -595,22 +595,22 @@ document.addEventListener('DOMContentLoaded', () => {
         updateEscapeLives();
         escapeScoreDisplay.innerText = escapeScore;
         escapeTimeDisplay.innerText = escapeTime;
-        
+
         escapeStartOverlay.classList.add('hidden');
         escapeOverOverlay.classList.add('hidden');
         escapePauseOverlay.classList.add('hidden');
         escapePauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
-        
+
         // Clear entities
         escEntities.forEach(ent => ent.element.remove());
         escEntities = [];
-        
+
         updateEscPlayerPos();
-        
+
         clearInterval(escapeSpawner);
         clearInterval(escapeTimer);
         cancelAnimationFrame(escapeGameLoop);
-        
+
         escapeTimer = setInterval(() => {
             if (isEscapePaused) return;
             escapeTime--;
@@ -619,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 endEscapeGame(escapeScore >= 100);
             }
         }, 1000);
-        
+
         escapeSpawner = setInterval(spawnEscItem, 800);
         escapeGameLoop = requestAnimationFrame(updateEscapeGame);
     }
@@ -650,10 +650,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isEscapePaused || !isEscapeRunning) return;
         const item = document.createElement('div');
         item.classList.add('escape-item');
-        
+
         const isPositive = Math.random() < 0.65;
         const type = isPositive ? 'positive' : 'negative';
-        
+
         if (isPositive) {
             item.innerHTML = positiveItems[Math.floor(Math.random() * positiveItems.length)];
             item.style.color = 'var(--primary-color)';
@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
             item.innerHTML = negativeItems[Math.floor(Math.random() * negativeItems.length)];
             item.style.color = '#c0392b';
         }
-        
+
         // Random spawn location on borders
         let spawnX, spawnY;
         if (Math.random() > 0.5) {
@@ -671,12 +671,12 @@ document.addEventListener('DOMContentLoaded', () => {
             spawnX = Math.random() * 100;
             spawnY = Math.random() > 0.5 ? -10 : 110;
         }
-        
+
         item.style.left = `${spawnX}%`;
         item.style.top = `${spawnY}%`;
-        
+
         escapeBoard.appendChild(item);
-        
+
         escEntities.push({
             element: item,
             x: spawnX,
@@ -703,13 +703,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Entity updates
         for (let i = escEntities.length - 1; i >= 0; i--) {
             const ent = escEntities[i];
-            
+
             if (ent.isChasing) {
                 // Move towards player
                 const dx = escPlayerX - ent.x;
                 const dy = escPlayerY - ent.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                if(dist > 0) {
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist > 0) {
                     ent.x += (dx / dist) * 0.3;
                     ent.y += (dy / dist) * 0.3;
                 }
@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ent.x += ent.speedX;
                 ent.y += ent.speedY;
             }
-            
+
             ent.element.style.left = `${ent.x}%`;
             ent.element.style.top = `${ent.y}%`;
 
@@ -736,17 +736,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     escapeLives--;
                     updateEscapeLives();
                     playSound(sfxHit);
-                    
+
                     // Flash red
                     escapeBoard.style.backgroundColor = 'rgba(192, 57, 43, 0.4)';
-                    setTimeout(() => { if(isEscapeRunning) escapeBoard.style.backgroundColor = 'rgba(41, 128, 185, 0.12)'; }, 200);
-                    
+                    setTimeout(() => { if (isEscapeRunning) escapeBoard.style.backgroundColor = 'rgba(41, 128, 185, 0.12)'; }, 200);
+
                     if (escapeLives <= 0) {
                         endEscapeGame(false);
                         return;
                     }
                 }
-                
+
                 ent.element.remove();
                 escEntities.splice(i, 1);
                 continue;
@@ -765,7 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function playSound(audioElement) {
         if (!audioElement) return;
         audioElement.currentTime = 0;
-        audioElement.play().catch(e => {}); // Ignore error
+        audioElement.play().catch(e => { }); // Ignore error
     }
 
     function isIntersecting(rect1, rect2, shrink = 0) {
@@ -779,9 +779,9 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(escapeTimer);
         clearInterval(escapeSpawner);
         cancelAnimationFrame(escapeGameLoop);
-        
+
         escapeFinalScore.innerText = escapeScore;
-        
+
         if (isWin || escapeScore >= 100) {
             escapeOverTitle.innerText = "Selamat! Kamu berhasil memilih hidup sehat.";
             escapeOverTitle.style.color = "var(--success-color)";
@@ -793,7 +793,7 @@ document.addEventListener('DOMContentLoaded', () => {
             escapeMessage.innerText = "Jangan biarkan narkoba menghancurkan masa depanmu.";
             escapeMessage.style.color = "var(--text-color)";
         }
-        
+
         escapeOverOverlay.classList.remove('hidden');
     }
 });
