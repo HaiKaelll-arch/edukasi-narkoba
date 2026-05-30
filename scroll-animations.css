@@ -1,0 +1,353 @@
+/* ============================================
+   SCROLL ANIMATIONS - PIK-R JP ONE
+   Premium Interactive Scroll Effects
+   ============================================ */
+
+/* === SCROLL REVEAL BASE CLASSES === */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0) !important;
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.revealed,
+.reveal-right.revealed,
+.reveal-scale.revealed {
+    opacity: 1;
+    transform: translateX(0) scale(1) !important;
+}
+
+/* === HERO SECTION ENHANCEMENTS === */
+#hero-particles-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content, .hero-image {
+    position: relative;
+    z-index: 2;
+}
+
+/* === GOLONGAN CARDS ENHANCED HOVER === */
+.golongan-card {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease !important;
+}
+
+.golongan-card:hover {
+    transform: translateY(-12px) !important;
+    box-shadow: 0 20px 40px rgba(41, 128, 185, 0.15),
+                0 0 30px rgba(41, 128, 185, 0.1);
+    border-color: var(--primary-color) !important;
+}
+
+/* === IMPACT ICON PULSE === */
+.impact-icon-pulse {
+    animation: iconPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* === ABOUT CARD FLOAT ON HOVER === */
+.about-card {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.5s ease,
+                border-color 0.5s ease !important;
+}
+
+.about-card:hover {
+    transform: translateY(-15px) !important;
+    box-shadow: 0 25px 50px rgba(41, 128, 185, 0.12);
+}
+
+/* === ABOUT ICON FLOAT === */
+.about-icon-float {
+    animation: iconFloat 4s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* === QUIZ ZOOM-IN === */
+.quiz-zoom {
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quiz-zoom.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* === GAME SCALE-UP === */
+.game-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.game-scale.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* === NEON GLOW EFFECT === */
+.neon-glow {
+    box-shadow: 0 0 15px rgba(41, 128, 185, 0.15),
+                inset 0 0 15px rgba(41, 128, 185, 0.05);
+    animation: neonPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+    0% { box-shadow: 0 0 15px rgba(41, 128, 185, 0.15), inset 0 0 15px rgba(41, 128, 185, 0.05); }
+    100% { box-shadow: 0 0 25px rgba(41, 128, 185, 0.25), inset 0 0 25px rgba(41, 128, 185, 0.1); }
+}
+
+/* === PARALLAX FLOATING OBJECTS === */
+.parallax-objects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.parallax-obj {
+    position: absolute;
+    font-size: 1.8rem;
+    opacity: 0.06;
+    color: var(--primary-color);
+    transition: transform 0.1s linear;
+    will-change: transform;
+}
+
+.parallax-obj:nth-child(1) { top: 8%; left: 5%; font-size: 2.2rem; }
+.parallax-obj:nth-child(2) { top: 15%; right: 8%; font-size: 1.6rem; }
+.parallax-obj:nth-child(3) { top: 35%; left: 3%; font-size: 2rem; }
+.parallax-obj:nth-child(4) { top: 50%; right: 5%; font-size: 1.4rem; }
+.parallax-obj:nth-child(5) { top: 65%; left: 7%; font-size: 1.8rem; }
+.parallax-obj:nth-child(6) { top: 80%; right: 10%; font-size: 2rem; }
+
+/* === DRUG-TO-POSITIVE TRANSITION SECTION === */
+.transition-section {
+    position: relative;
+    padding: 80px 5%;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transition-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
+
+.trans-icon {
+    font-size: 2.5rem;
+    padding: 20px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trans-icon.drug-icon {
+    color: #c0392b;
+    opacity: 0.8;
+    border-color: rgba(192, 57, 43, 0.3);
+}
+
+.trans-icon.positive-icon {
+    color: var(--primary-color);
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+    border-color: rgba(41, 128, 185, 0.3);
+}
+
+.trans-icon.drug-icon.fade-away {
+    opacity: 0;
+    transform: scale(0.3) translateY(-40px);
+}
+
+.trans-icon.positive-icon.appear {
+    opacity: 0.9;
+    transform: scale(1) translateY(0);
+}
+
+.transition-text {
+    position: absolute;
+    text-align: center;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.transition-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === SECTION DIVIDER LINE === */
+.section-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    margin: 0 auto 30px;
+    border-radius: 3px;
+    opacity: 0;
+    transform: scaleX(0);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-divider.revealed {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+/* === MOTIVASI PARTICLES === */
+#motivasi-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.quotes-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* === COUNTER ANIMATION === */
+.counter-number {
+    display: inline-block;
+    font-weight: 800;
+    color: var(--primary-color);
+    font-size: 2.5rem;
+}
+
+/* === SMOOTH SCROLL PROGRESS === */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color));
+    z-index: 99998;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+    .parallax-objects {
+        display: none; /* Hide floating objects on mobile for performance */
+    }
+
+    .trans-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.8rem;
+    }
+
+    .transition-icons {
+        gap: 15px;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal,
+    .reveal-left,
+    .reveal-right,
+    .reveal-scale,
+    .quiz-zoom,
+    .game-scale {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .impact-icon-pulse,
+    .about-icon-float,
+    .neon-glow {
+        animation: none !important;
+    }
+
+    .parallax-objects {
+        display: none;
+    }
+}

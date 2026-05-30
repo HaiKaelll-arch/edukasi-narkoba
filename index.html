@@ -11,9 +11,105 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS -->
+    <link rel="stylesheet" href="intro.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="scroll-animations.css">
 </head>
-<body>
+<body data-theme="dark">
+    <!-- ============================================
+         INTERACTIVE HERO ANIMATION
+         "Perjalanan Memilih Masa Depan Bebas Narkoba"
+         ============================================ -->
+
+    <!-- Intro Loading Screen -->
+    <div id="intro-loader">
+        <div class="intro-loader-ring"></div>
+        <p class="intro-loader-text">Memuat Pengalaman</p>
+        <div class="intro-loader-bar">
+            <div class="intro-loader-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- Intro Animation Container -->
+    <div id="intro-animation">
+        <canvas id="intro-particles"></canvas>
+
+        <!-- Scene 1: Dunia Gelap -->
+        <div class="intro-scene" id="scene-1">
+            <div class="city-silhouette"></div>
+            <div class="fog-layer"></div>
+            <div class="glitch-overlay"></div>
+            <div class="scene1-text">
+                <h1>Setiap Pilihan<br>Menentukan <span>Masa Depan</span></h1>
+                <p class="subtitle">PIK-R JP ONE</p>
+            </div>
+            <div class="scroll-hint">
+                <div class="mouse"></div>
+                <span>Menonton</span>
+            </div>
+        </div>
+
+        <!-- Scene 2: Ancaman Narkoba -->
+        <div class="intro-scene" id="scene-2">
+            <div class="floating-drugs">
+                <div class="drug-obj"><i class="fa-solid fa-pills"></i></div>
+                <div class="drug-obj"><i class="fa-solid fa-capsules"></i></div>
+                <div class="drug-obj"><i class="fa-solid fa-syringe"></i></div>
+                <div class="drug-obj"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+                <div class="drug-obj"><i class="fa-solid fa-smoking"></i></div>
+                <div class="drug-obj"><i class="fa-solid fa-cannabis"></i></div>
+                <div class="drug-obj"><i class="fa-solid fa-tablets"></i></div>
+                <div class="drug-obj"><i class="fa-solid fa-bong"></i></div>
+            </div>
+            <div class="warning-ring"></div>
+            <div class="scene2-text">
+                <h2><strong>Narkoba</strong> dapat merusak <strong>kesehatan</strong>,<br><strong>pendidikan</strong>, dan <strong>masa depan</strong>.</h2>
+            </div>
+        </div>
+
+        <!-- Scene 3: Perlawanan -->
+        <div class="intro-scene" id="scene-3">
+            <div class="ban-symbol">
+                <i class="fa-solid fa-skull-crossbones"></i>
+            </div>
+            <div class="scene3-text">
+                <h1>Katakan <span>TIDAK</span><br>Pada Narkoba</h1>
+            </div>
+        </div>
+
+        <!-- Scene 4: Masa Depan Cerah -->
+        <div class="intro-scene" id="scene-4">
+            <div class="floating-positive">
+                <div class="positive-obj"><i class="fa-solid fa-book-open"></i></div>
+                <div class="positive-obj"><i class="fa-solid fa-laptop-code"></i></div>
+                <div class="positive-obj"><i class="fa-solid fa-trophy"></i></div>
+                <div class="positive-obj"><i class="fa-solid fa-volleyball"></i></div>
+                <div class="positive-obj"><i class="fa-solid fa-music"></i></div>
+                <div class="positive-obj"><i class="fa-solid fa-people-roof"></i></div>
+                <div class="positive-obj"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="positive-obj"><i class="fa-solid fa-heart-pulse"></i></div>
+            </div>
+            <div class="scene4-text">
+                <h1>Pilih <span>Prestasi</span>,<br>Kesehatan, dan Masa Depan</h1>
+                <p class="tagline">PIK-R JP ONE &mdash; Generasi Bebas Narkoba</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skip Button -->
+    <button id="intro-skip">Skip <i class="fa-solid fa-forward"></i></button>
+
+    <!-- Progress Bar -->
+    <div id="intro-progress" style="width: 0%;"></div>
+
+    <!-- Scene Indicators -->
+    <div class="scene-indicators">
+        <div class="scene-dot" data-scene="0"></div>
+        <div class="scene-dot" data-scene="1"></div>
+        <div class="scene-dot" data-scene="2"></div>
+        <div class="scene-dot" data-scene="3"></div>
+    </div>
+
     <!-- Loading Screen -->
     <div id="loader">
         <div class="spinner"></div>
@@ -41,7 +137,7 @@
         </ul>
         <div class="nav-controls">
             <button id="audio-toggle" title="Play/Pause Music"><i class="fa-solid fa-volume-xmark"></i></button>
-            <button id="theme-toggle" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <button id="theme-toggle" title="Toggle Dark/Light Mode"><i class="fa-solid fa-sun"></i></button>
             <div class="hamburger">
                 <i class="fa-solid fa-bars"></i>
             </div>
@@ -384,6 +480,8 @@
         </div>
     </div>
 
+    <script src="intro.js"></script>
+    <script src="scroll-animations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

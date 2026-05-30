@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* === THEME TOGGLE === */
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
-    let isDark = false;
+    let isDark = true; // Started as dark default
 
     themeToggle.addEventListener('click', () => {
         isDark = !isDark;
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameScore >= 150) {
             title.innerText = "selamat kamu hebat >_<";
             title.style.color = "var(--success-color)";
-            msg.innerText = "Target tercapai! Hidup sehat tanpa narkoba!";
+            msg.innerText = "Kemenangan ini mengingatkan bahwa pilihan sehat selalu membawa hasil terbaik.";
             msg.style.color = 'var(--success-color)';
         } else {
             title.innerText = "Game Over!";
@@ -785,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isWin || escapeScore >= 100) {
             escapeOverTitle.innerText = "Selamat! Kamu berhasil memilih hidup sehat.";
             escapeOverTitle.style.color = "var(--success-color)";
-            escapeMessage.innerText = "Kamu telah membuktikan bahwa hidup tanpa narkoba jauh lebih indah!";
+            escapeMessage.innerText = "Sayangi dirimu, keluargamu, dan masa depanmu dengan menjauhi narkoba.";
             escapeMessage.style.color = "var(--success-color)";
         } else {
             escapeOverTitle.innerText = "Game Over!";

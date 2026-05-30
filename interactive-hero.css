@@ -1,0 +1,160 @@
+/* ============================================
+   INTERACTIVE HERO SCROLL ANIMATION
+   ============================================ */
+
+.interactive-hero {
+    position: relative;
+    height: 100vh; /* Actually we'll make it taller via JS if needed, or just let scroll dictate */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(circle at center, var(--bg-darker) 0%, var(--bg-color) 100%);
+}
+
+/* Make it tall so we have room to scroll and animate before hitting the next section */
+body.has-interactive-hero .interactive-hero {
+    height: 180vh; 
+    align-items: flex-start; /* To allow sticky logic */
+}
+
+.hero-sticky-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Background Logo Watermark */
+.hero-watermark {
+    position: absolute;
+    width: 80vmin;
+    height: 80vmin;
+    object-fit: contain;
+    opacity: 0.08;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 0 40px var(--primary-color)) blur(2px);
+    transition: opacity 0.5s ease;
+}
+
+/* Floating Elements Container */
+#hero-floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    perspective: 1000px;
+}
+
+.anim-icon {
+    position: absolute;
+    font-size: 3.5rem;
+    top: 50%;
+    left: 50%;
+    /* Initially centered, we push them out with JS */
+    transform-origin: center;
+    transition: opacity 0.5s ease;
+    will-change: transform, opacity;
+}
+
+/* Glow effects */
+.icon-bad {
+    color: #e74c3c;
+    filter: drop-shadow(0 0 15px rgba(231, 76, 60, 0.7));
+}
+.icon-bad.type-impact { color: #c0392b; filter: drop-shadow(0 0 20px rgba(192, 57, 43, 0.8)); }
+.icon-bad.type-danger { color: #e67e22; filter: drop-shadow(0 0 15px rgba(230, 126, 34, 0.8)); }
+
+.icon-good {
+    color: #2ecc71; /* Green/Blue vibes */
+    filter: drop-shadow(0 0 20px rgba(46, 204, 113, 0.8));
+    opacity: 0; /* Hidden initially */
+    transform: scale(0);
+}
+.icon-good:nth-child(odd) { color: #3498db; filter: drop-shadow(0 0 20px rgba(52, 152, 219, 0.8)); }
+
+/* Standard Content (Always visible initially) */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Dynamic Scroll Texts */
+.hero-scroll-texts {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.hero-scroll-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    transform: translate(-50%, -30%) scale(0.9);
+    font-size: 4rem;
+    font-weight: 800;
+    opacity: 0;
+    color: #fff;
+    font-family: var(--font-main);
+    line-height: 1.2;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* Glassmorphism text effect */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.hero-scroll-text span {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--primary-color);
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.hero-scroll-text.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Add custom neon particles for hero background */
+#hero-particles-bg {
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .hero-scroll-text {
+        font-size: 2.2rem;
+        padding: 20px;
+    }
+    .anim-icon {
+        font-size: 2.5rem;
+    }
+    .hero-watermark {
+        width: 100vmin;
+        height: 100vmin;
+    }
+}
