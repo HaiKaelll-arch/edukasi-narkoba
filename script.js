@@ -796,4 +796,156 @@ document.addEventListener('DOMContentLoaded', () => {
 
         escapeOverOverlay.classList.remove('hidden');
     }
+
+    /* === DRUG MODAL LOGIC === */
+    const drugData = {
+        'ganja': {
+            name: 'Ganja',
+            image: 'ganja.jpg',
+            desc: 'Ganja adalah narkotika golongan I yang berasal dari tanaman Cannabis sativa. Dapat menyebabkan halusinasi dan ketergantungan.',
+            impact: 'Gangguan mental, penurunan konsentrasi, gangguan pernapasan, dan kecanduan psikologis jangka panjang.'
+        },
+        'sabu': {
+            name: 'Sabu-sabu',
+            image: 'sabu.jpg',
+            desc: 'Sabu (Metamfetamin) adalah stimulan kuat golongan I yang sangat adiktif. Berbentuk seperti kristal putih.',
+            impact: 'Kerusakan gigi parah (meth mouth), paranoia, halusinasi, kerusakan otak permanen, dan gagal jantung.'
+        },
+        'kokain': {
+            name: 'Kokain',
+            image: 'kokain.jpg',
+            desc: 'Kokain adalah stimulan adiktif golongan I yang terbuat dari daun tanaman koka. Biasanya berbentuk bubuk putih.',
+            impact: 'Penyempitan pembuluh darah, serangan jantung, stroke, kerusakan saraf hidung, dan depresi berat.'
+        },
+        'opium': {
+            name: 'Opium',
+            image: 'opium.jpg',
+            desc: 'Opium adalah getah dari tanaman Papaver somniferum yang mengandung zat aktif memabukkan.',
+            impact: 'Penurunan kesadaran, sesak napas, koma, hingga kematian akibat overdosis.'
+        },
+        'heroin': {
+            name: 'Heroin',
+            image: 'heroin.jpg',
+            desc: 'Heroin (Putaw) adalah narkotika golongan I hasil sintesis dari morfin yang sangat adiktif.',
+            impact: 'Kerusakan hati, ginjal, infeksi katup jantung, dan penularan HIV/AIDS akibat jarum suntik.'
+        },
+        'morfin': {
+            name: 'Morfin',
+            image: 'morfin.jpg',
+            desc: 'Morfin adalah obat pereda nyeri yang sangat kuat (Golongan II) namun sangat berbahaya jika disalahgunakan.',
+            impact: 'Depresi sistem pernapasan, sembelit kronis, penurunan kesadaran, koma, hingga kematian.'
+        },
+        'fentanil': {
+            name: 'Fentanil',
+            image: 'fentanil.jpg',
+            desc: 'Fentanil adalah opioid sintetis Golongan II yang efeknya 50-100 kali lebih kuat dari morfin. Sangat mematikan.',
+            impact: 'Henti napas mendadak, sangat mudah overdosis meski dalam dosis mikrogram, dan kematian seketika.'
+        },
+        'metadon': {
+            name: 'Metadon',
+            image: 'metadon.jpg',
+            desc: 'Metadon adalah opioid Golongan II yang sering digunakan untuk terapi pecandu, tapi tetap berisiko jika disalahgunakan.',
+            impact: 'Mual, muntah, sesak napas, gangguan ritme jantung, koma kronis jika tidak dikendalikan.'
+        },
+        'kodein': {
+            name: 'Kodein',
+            image: 'kodein.jpg',
+            desc: 'Kodein adalah opioid ringan Golongan III (terdapat di beberapa obat batuk) yang punya potensi kecanduan.',
+            impact: 'Ketergantungan ringan, mual, sakit kepala, kebingungan, dan kerusakan organ dalam jangka panjang.'
+        },
+        'buprenorfin': {
+            name: 'Buprenorfin',
+            image: 'buprenorfin.jpg',
+            desc: 'Narkotika Golongan III, biasanya diresepkan dokter untuk mengatasi nyeri otot atau efek putus zat, namun bisa disalahgunakan.',
+            impact: 'Pusing akut, muntah, gangguan tidur, hingga depresi pernapasan ringan.'
+        }
+    };
+
+    const drugLinks = document.querySelectorAll('.drug-link');
+    const drugModal = document.getElementById('drug-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalLoader = document.getElementById('modal-loader');
+    const modalContentArea = document.getElementById('modal-content-area');
+
+    // Elements to update
+    const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalImpact = document.getElementById('modal-impact');
+
+    function openModal(drugId) {
+        const data = drugData[drugId];
+        if (!data) return;
+
+        // Show modal and overlay
+        document.body.style.overflow = 'hidden'; // prevent scrolling
+        drugModal.classList.remove('hidden');
+
+        // Timeout to allow display block to take effect before opacity transition
+        setTimeout(() => {
+            drugModal.style.opacity = '1';
+        }, 10);
+
+        // Reset state
+        modalContentArea.classList.add('hidden');
+        modalLoader.classList.remove('hidden');
+
+        // Populate data
+        modalTitle.innerText = data.name;
+        modalDesc.innerText = data.desc;
+        modalImpact.innerText = data.impact;
+
+        // Preload image with robust fallback
+        const showContent = () => {
+            modalLoader.classList.add('hidden');
+            modalContentArea.classList.remove('hidden');
+            modalContentArea.classList.add('appear'); // trigger animation
+        };
+
+        modalImg.onload = () => {
+            setTimeout(showContent, 200); // slight delay for smooth visual
+        };
+
+        modalImg.onerror = () => {
+            modalImg.src = 'logo-pikr.png'; // reliable fallback image
+            setTimeout(showContent, 200);
+        };
+
+        // Trigger fetch after declaring handlers
+        modalImg.src = data.image;
+    }
+
+    function closeModal() {
+        drugModal.style.opacity = '0';
+        setTimeout(() => {
+            drugModal.classList.add('hidden');
+            modalContentArea.classList.remove('appear');
+            document.body.style.overflow = 'auto'; // enable scrolling
+        }, 400); // match transition duration
+    }
+
+    drugLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const drugId = link.getAttribute('data-drug');
+            openModal(drugId);
+        });
+    });
+
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+    // Close on outside click
+    if (drugModal) {
+        drugModal.addEventListener('click', (e) => {
+            if (e.target === drugModal) closeModal();
+        });
+    }
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drugModal && !drugModal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
 });
