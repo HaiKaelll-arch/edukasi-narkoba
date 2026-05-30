@@ -21,25 +21,24 @@
     const STORAGE_KEY = 'pikr_intro_seen_v2';
 
     // === CHECK LOCALSTORAGE ===
-    if (localStorage.getItem(STORAGE_KEY)) {
-        // User has seen the intro before - remove intro elements
-        window.addEventListener('DOMContentLoaded', () => {
-            const intro = document.getElementById('intro-animation');
-            const introLoader = document.getElementById('intro-loader');
-            const skipBtn = document.getElementById('intro-skip');
-            const progress = document.getElementById('intro-progress');
-            const indicators = document.querySelector('.scene-indicators');
-            if (intro) intro.remove();
-            if (introLoader) introLoader.remove();
-            if (skipBtn) skipBtn.remove();
-            if (progress) progress.remove();
-            if (indicators) indicators.remove();
-            // Show navbar
-            const navbar = document.querySelector('.navbar');
-            if (navbar) navbar.style.opacity = '1';
-        });
-        return; // Stop executing intro logic
-    }
+    // Removed per user request so intro plays every time it's opened/refreshed
+    // if (localStorage.getItem(STORAGE_KEY)) {
+    //     window.addEventListener('DOMContentLoaded', () => {
+    //         const intro = document.getElementById('intro-animation');
+    //         const introLoader = document.getElementById('intro-loader');
+    //         const skipBtn = document.getElementById('intro-skip');
+    //         const progress = document.getElementById('intro-progress');
+    //         const indicators = document.querySelector('.scene-indicators');
+    //         if (intro) intro.remove();
+    //         if (introLoader) introLoader.remove();
+    //         if (skipBtn) skipBtn.remove();
+    //         if (progress) progress.remove();
+    //         if (indicators) indicators.remove();
+    //         const navbar = document.querySelector('.navbar');
+    //         if (navbar) navbar.style.opacity = '1';
+    //     });
+    //     return; 
+    // }
 
     // === MAIN INTRO LOGIC ===
     window.addEventListener('DOMContentLoaded', () => {
@@ -294,7 +293,7 @@
             sceneTimeouts = [];
 
             // Save to localStorage
-            localStorage.setItem(STORAGE_KEY, 'true');
+            // localStorage.setItem(STORAGE_KEY, 'true'); // commented out so it plays every time
 
             // Fade out intro
             intro.classList.add('fade-out');
