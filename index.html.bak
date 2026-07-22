@@ -607,9 +607,8 @@
                     class="btn-instagram" target="_blank">
                     <i class="fa-brands fa-instagram"></i> Instagram
                 </a>
-                <a href="https://www.tiktok.com/@smkjpone?is_from_webapp=1&sender_device=pc" class="btn-tiktok"
-                    target="_blank">
-                    <i class="fa-brands fa-tiktok"></i> TikTok
+                <a href="https://wa.me/628123456789" class="btn-whatsapp" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
                 </a>
                 <button class="btn-backtop" id="btn-back-top">
                     <i class="fa-solid fa-arrow-up"></i> Kembali ke Atas
@@ -637,6 +636,8 @@
                     <a href="https://www.tiktok.com/@smkjpone?is_from_webapp=1&sender_device=pc"
                         class="footer-social-btn tiktok" target="_blank" title="TikTok"><i
                             class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://wa.me/628123456789" class="footer-social-btn whatsapp" target="_blank"
+                        title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
             </div>
 
@@ -660,14 +661,17 @@
                 <div class="footer-contact">
                     <div class="footer-contact-item">
                         <i class="fa-solid fa-location-dot"></i>
-                        <span>SMK JP ONE (Jakarta Pusat 1)<br> JL. ABDUL MUIS NO. 44, Petojo Selatan, Kec. Gambir, Kota
-                            Jakarta Pusat, D.K.I. Jakarta.</span>
+                        <span>SMK JP ONE (Jakarta Pusat 1)<br>Jl. Kramat Raya No. 49, Kec. Senen, Kota Jakarta Pusat,
+                            DKI Jakarta 10450</span>
                     </div>
                     <div class="footer-contact-item">
                         <i class="fa-solid fa-envelope"></i>
                         <span>pikr.jpone@gmail.com</span>
                     </div>
-
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+62 812-3456-7890</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -941,100 +945,52 @@
                     <div class="ch-bot"></div>
                     <div class="cl-bot"></div>
                     <div class="cr-bot"></div>
-                </div>
-
-                <!-- Anggota grid 6 orang -->
+                             <!-- Anggota grid 6 orang -->
                 <div class="org-row-anggota" data-ao="fade-up">
                     <div class="member-card anggota-card" id="member-anggota1">
                         <div class="member-photo">
                             <img src="anggota1.jpg" alt="Anggota 1">
                         </div>
-                        <h4 class="member-name">Intan Maulida Ramadhan</h4>
+                        <h4 class="member-name">Nama Lengkap</h4>
                         <span class="member-role">Anggota 1</span>
                     </div>
                     <div class="member-card anggota-card" id="member-anggota2">
                         <div class="member-photo">
                             <img src="anggota2.jpg" alt="Anggota 2">
                         </div>
-                        <h4 class="member-name">Alhikam Fathul Mubin</h4>
+                        <h4 class="member-name">Nama Lengkap</h4>
                         <span class="member-role">Anggota 2</span>
                     </div>
                     <div class="member-card anggota-card" id="member-anggota3">
                         <div class="member-photo">
                             <img src="anggota3.jpg" alt="Anggota 3">
                         </div>
-                        <h4 class="member-name">Aqilah</h4>
+                        <h4 class="member-name">Nama Lengkap</h4>
                         <span class="member-role">Anggota 3</span>
                     </div>
                     <div class="member-card anggota-card" id="member-anggota4">
                         <div class="member-photo">
                             <img src="anggota4.jpg" alt="Anggota 4">
                         </div>
-                        <h4 class="member-name">Muhammad Ilham Jawahir</h4>
+                        <h4 class="member-name">Nama Lengkap</h4>
                         <span class="member-role">Anggota 4</span>
                     </div>
                     <div class="member-card anggota-card" id="member-anggota5">
                         <div class="member-photo">
                             <img src="anggota5.jpg" alt="Anggota 5">
                         </div>
-                        <h4 class="member-name">Argya Fais Rahman</h4>
+                        <h4 class="member-name">Nama Lengkap</h4>
                         <span class="member-role">Anggota 5</span>
                     </div>
                     <div class="member-card anggota-card" id="member-anggota6">
                         <div class="member-photo">
-                            <img src="anggota6.jpg" alt="Anggota 6">
+                            <div class="photo-placeholder"><i class="fa-solid fa-user"></i></div>
                         </div>
-                        <h4 class="member-name">Febri Haikal R</h4>
+                        <h4 class="member-name">Nama Lengkap</h4>
                         <span class="member-role">Anggota 6</span>
                     </div>
-                </div>
+                </div>      </div>
 
-            </div>
-        </section>
-
-        <!-- ============================================
-             DOKUMENTASI KEGIATAN PIK-R (GALLERY)
-             ============================================ -->
-        <section class="gallery-section" data-ao="fade-up">
-            <div class="section-header">
-                <h2>Galeri <span class="text-glow">Kegiatan Kami</span></h2>
-                <p>Dokumentasi aksi nyata dan kebersamaan seluruh pengurus PIK-R JP ONE.</p>
-            </div>
-
-            <div class="gallery-grid">
-                <!-- Foto 1 s.d. 4 (Aktif dari User) -->
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="100">
-                    <img src="kegiatan1.jpg" alt="Kegiatan PIK-R JP ONE 1">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="200">
-                    <img src="kegiatan2.jpg" alt="Kegiatan PIK-R JP ONE 2">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="300">
-                    <img src="kegiatan3.jpg" alt="Kegiatan PIK-R JP ONE 3">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="400">
-                    <img src="kegiatan4.jpg" alt="Kegiatan PIK-R JP ONE 4">
-                </div>
-
-                <!-- Foto 5 s.d. 10 (Lengkap) -->
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="500">
-                    <img src="kegiatan5.jpg" alt="Kegiatan PIK-R JP ONE 5">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="100">
-                    <img src="kegiatan6.jpg" alt="Kegiatan PIK-R JP ONE 6">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="200">
-                    <img src="kegiatan7.jpg" alt="Kegiatan PIK-R JP ONE 7">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="300">
-                    <img src="kegiatan8.jpg" alt="Kegiatan PIK-R JP ONE 8">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="400">
-                    <img src="kegiatan9.jpg" alt="Kegiatan PIK-R JP ONE 9">
-                </div>
-                <div class="gallery-item" data-ao="zoom-in" data-ao-delay="500">
-                    <img src="kegiatan10.jpg" alt="Kegiatan PIK-R JP ONE 10">
-                </div>
             </div>
         </section>
 
@@ -1048,8 +1004,8 @@
                 <div class="cta-buttons">
                     <a href="https://www.instagram.com/pikr_smkjp1?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                         class="btn-instagram" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
-                    <a href="https://www.tiktok.com/@smkjpone?is_from_webapp=1&sender_device=pc" class="btn-tiktok"
-                        target="_blank"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+                    <a href="https://wa.me/628123456789" class="btn-whatsapp" target="_blank"><i
+                            class="fa-brands fa-whatsapp"></i> WhatsApp</a>
                     <button class="btn-backtop" id="btn-back-top-about"><i class="fa-solid fa-arrow-up"></i> Ke
                         Atas</button>
                 </div>
