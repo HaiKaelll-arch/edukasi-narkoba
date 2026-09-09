@@ -252,4 +252,243 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
+    // --- 7. INTERACTIVE GALLERY HERO ANIMATION ---
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryModal = document.getElementById('gallery-hero-modal');
+    const galleryCard = document.getElementById('gallery-hero-card');
+    const galleryBackdrop = document.getElementById('gallery-hero-backdrop');
+    const galleryCloseBtn = document.getElementById('gallery-hero-close');
+    const galleryPrevBtn = document.getElementById('gallery-hero-prev');
+    const galleryNextBtn = document.getElementById('gallery-hero-next');
+    const galleryImg = document.getElementById('gallery-hero-img');
+    const galleryTag = document.getElementById('gallery-hero-tag');
+    const galleryTitle = document.getElementById('gallery-hero-title');
+    const galleryDesc = document.getElementById('gallery-hero-desc');
+    const galleryCounter = document.getElementById('gallery-hero-counter');
+    const galleryInfo = document.getElementById('gallery-hero-info');
+
+    let activeGalleryIndex = 0;
+    let isGalleryAnimating = false;
+
+    function openGalleryHero(index) {
+        if (!galleryModal || !galleryCard || isGalleryAnimating) return;
+        if (index < 0 || index >= galleryItems.length) return;
+
+        isGalleryAnimating = true;
+        activeGalleryIndex = index;
+        const currentItem = galleryItems[index];
+        const currentImg = currentItem.querySelector('img');
+
+        // Update modal content
+        if (galleryImg && currentImg) {
+            galleryImg.src = currentImg.src;
+            galleryImg.alt = currentImg.alt || 'Dokumentasi PIK-R';
+        }
+        if (galleryTitle) {
+            galleryTitle.textContent = currentItem.getAttribute('data-title') || 'Dokumentasi Kegiatan';
+        }
+        if (galleryTag) {
+            galleryTag.innerHTML = `<i class="fa-solid fa-camera-retro"></i> ${currentItem.getAttribute('data-tag') || 'Dokumentasi'}`;
+        }
+        if (galleryDesc) {
+            galleryDesc.textContent = currentItem.getAttribute('data-desc') || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+        }
+        if (galleryCounter) {
+            galleryCounter.textContent = `Foto ${index + 1} / ${galleryItems.length}`;
+        }
+
+        // 1. First: Ambil posisi thumbnail sebelum dibuka
+        const startRect = currentItem.getBoundingClientRect();
+
+        // 2. Tampilkan modal overlay
+        galleryModal.classList.add('is-open');
+        galleryModal.setAttribute('aria-hidden', 'false');
+
+        // 3. Last: Ambil posisi target modal card
+        const targetRect = galleryCard.getBoundingClientRect();
+
+        // 4. Invert: Hitung delta dan scale untuk Hero Shared Element Animation
+        const deltaX = startRect.left - targetRect.left;
+        const deltaY = startRect.top - targetRect.top;
+        const scaleX = startRect.width / targetRect.width;
+        const scaleY = startRect.height / targetRect.height;
+
+        galleryCard.style.transformOrigin = 'top left';
+        galleryCard.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`;
+        galleryCard.style.borderRadius = '20px';
+        galleryCard.style.transition = 'none';
+
+        if (galleryInfo) {
+            galleryInfo.style.opacity = '0';
+            galleryInfo.style.transform = 'translateY(18px)';
+            galleryInfo.style.transition = 'none';
+        }
+
+        // Force reflow
+        galleryCard.offsetHeight;
+
+        // 5. Play: Animasikan membesar ke posisi modal tengah layar
+        requestAnimationFrame(() => {
+            galleryCard.style.transition = 'transform 0.48s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.48s ease';
+            galleryCard.style.transform = 'translate(0px, 0px) scale(1, 1)';
+            galleryCard.style.borderRadius = '24px';
+
+            if (galleryInfo) {
+                galleryInfo.style.transition = 'opacity 0.38s ease 0.18s, transform 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.18s';
+                galleryInfo.style.opacity = '1';
+                galleryInfo.style.transform = 'translateY(0)';
+            }
+
+            setTimeout(() => {
+                isGalleryAnimating = false;
+            }, 500);
+        });
+    }
+
+    function closeGalleryHero() {
+        if (!galleryModal || !galleryCard || !galleryModal.classList.contains('is-open') || isGalleryAnimating) return;
+
+        isGalleryAnimating = true;
+        const currentItem = galleryItems[activeGalleryIndex];
+
+        if (galleryInfo) {
+            galleryInfo.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            galleryInfo.style.opacity = '0';
+            galleryInfo.style.transform = 'translateY(12px)';
+        }
+
+        if (currentItem) {
+            const endRect = currentItem.getBoundingClientRect();
+            const currentRect = galleryCard.getBoundingClientRect();
+
+            const deltaX = endRect.left - currentRect.left;
+            const deltaY = endRect.top - currentRect.top;
+            const scaleX = endRect.width / currentRect.width;
+            const scaleY = endRect.height / currentRect.height;
+
+            galleryCard.style.transition = 'transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.38s ease';
+            galleryCard.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`;
+            galleryCard.style.borderRadius = '20px';
+        }
+
+        if (galleryBackdrop) {
+            galleryBackdrop.style.transition = 'opacity 0.35s ease';
+            galleryBackdrop.style.opacity = '0';
+        }
+
+        setTimeout(() => {
+            galleryModal.classList.remove('is-open');
+            galleryModal.setAttribute('aria-hidden', 'true');
+
+            // Reset inline styles
+            galleryCard.style.transform = '';
+            galleryCard.style.transition = '';
+            galleryCard.style.borderRadius = '';
+            galleryCard.style.transformOrigin = '';
+
+            if (galleryInfo) {
+                galleryInfo.style.opacity = '';
+                galleryInfo.style.transform = '';
+                galleryInfo.style.transition = '';
+            }
+            if (galleryBackdrop) {
+                galleryBackdrop.style.opacity = '';
+                galleryBackdrop.style.transition = '';
+            }
+
+            isGalleryAnimating = false;
+        }, 380);
+    }
+
+    function showGalleryItem(newIndex) {
+        if (isGalleryAnimating) return;
+        if (newIndex < 0) newIndex = galleryItems.length - 1;
+        if (newIndex >= galleryItems.length) newIndex = 0;
+
+        activeGalleryIndex = newIndex;
+        const targetItem = galleryItems[newIndex];
+        const targetImg = targetItem.querySelector('img');
+
+        if (galleryImg) {
+            galleryImg.classList.add('switching');
+            setTimeout(() => {
+                if (targetImg) {
+                    galleryImg.src = targetImg.src;
+                    galleryImg.alt = targetImg.alt || 'Dokumentasi PIK-R';
+                }
+                if (galleryTitle) {
+                    galleryTitle.textContent = targetItem.getAttribute('data-title') || 'Dokumentasi Kegiatan';
+                }
+                if (galleryTag) {
+                    galleryTag.innerHTML = `<i class="fa-solid fa-camera-retro"></i> ${targetItem.getAttribute('data-tag') || 'Dokumentasi'}`;
+                }
+                if (galleryDesc) {
+                    galleryDesc.textContent = targetItem.getAttribute('data-desc') || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+                }
+                if (galleryCounter) {
+                    galleryCounter.textContent = `Foto ${newIndex + 1} / ${galleryItems.length}`;
+                }
+                galleryImg.classList.remove('switching');
+            }, 150);
+        }
+    }
+
+    // Pasang event listener pada setiap thumbnail galeri
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            openGalleryHero(index);
+        });
+
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openGalleryHero(index);
+            }
+        });
+    });
+
+    // Event listener untuk tombol Close & Backdrop
+    if (galleryCloseBtn) {
+        galleryCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeGalleryHero();
+        });
+    }
+
+    if (galleryBackdrop) {
+        galleryBackdrop.addEventListener('click', () => {
+            closeGalleryHero();
+        });
+    }
+
+    // Event listener untuk tombol Prev & Next
+    if (galleryPrevBtn) {
+        galleryPrevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showGalleryItem(activeGalleryIndex - 1);
+        });
+    }
+
+    if (galleryNextBtn) {
+        galleryNextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showGalleryItem(activeGalleryIndex + 1);
+        });
+    }
+
+    // Keyboard navigation (Escape, ArrowLeft, ArrowRight)
+    window.addEventListener('keydown', (e) => {
+        if (!galleryModal || !galleryModal.classList.contains('is-open')) return;
+
+        if (e.key === 'Escape') {
+            closeGalleryHero();
+        } else if (e.key === 'ArrowLeft') {
+            showGalleryItem(activeGalleryIndex - 1);
+        } else if (e.key === 'ArrowRight') {
+            showGalleryItem(activeGalleryIndex + 1);
+        }
+    });
+
 });
+

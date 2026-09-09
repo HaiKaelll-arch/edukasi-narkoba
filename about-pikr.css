@@ -624,7 +624,7 @@
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 24px;
     margin-top: 40px;
 }
 .gallery-item {
@@ -635,22 +635,80 @@
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
-    transition: all 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+}
+.gallery-item:focus-visible {
+    box-shadow: 0 0 0 3px var(--primary-color), 0 0 25px rgba(41, 128, 185, 0.5);
 }
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
-}
-.gallery-item:hover img {
-    transform: scale(1.08);
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
 }
 .gallery-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(41, 128, 185, 0.25);
-    border-color: var(--primary-color);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(41, 128, 185, 0.35);
+    border-color: rgba(41, 128, 185, 0.8);
 }
+.gallery-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.05);
+}
+
+/* Hover Overlay */
+.gallery-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7, 13, 26, 0.85) 0%, rgba(7, 13, 26, 0.3) 50%, rgba(7, 13, 26, 0.05) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+.gallery-item:hover .gallery-hover-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+.gallery-hover-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(41, 128, 185, 0.9);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), 0 0 15px rgba(41, 128, 185, 0.6);
+    transform: scale(0.85);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.gallery-item:hover .gallery-hover-icon {
+    transform: scale(1);
+}
+.gallery-hover-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
 .gallery-placeholder {
     width: 100%;
     height: 100%;
@@ -669,13 +727,314 @@
     opacity: 0.6;
 }
 
+/* ====================================================
+   GALLERY HERO MODAL (LIGHTBOX & SHARED ANIMATION)
+   ==================================================== */
+.gallery-hero-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+.gallery-hero-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.gallery-hero-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 9, 18, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    cursor: pointer;
+    transition: opacity 0.35s ease;
+}
+.gallery-hero-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1040px;
+    padding: 20px;
+    margin: auto;
+    max-height: 94vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gallery-hero-card {
+    position: relative;
+    width: 100%;
+    background: rgba(13, 24, 44, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 45px rgba(41, 128, 185, 0.25);
+    overflow: hidden;
+    transform-origin: center center;
+}
+
+/* Close Button */
+.gallery-hero-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 15;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+}
+.gallery-hero-close:hover {
+    background: rgba(231, 76, 60, 0.9);
+    border-color: rgba(231, 76, 60, 1);
+    transform: rotate(90deg) scale(1.08);
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+}
+
+/* Nav Prev/Next Buttons */
+.gallery-hero-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 12;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(7, 13, 26, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+}
+.gallery-hero-nav.prev {
+    left: 16px;
+}
+.gallery-hero-nav.next {
+    right: 16px;
+}
+.gallery-hero-nav:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 20px rgba(41, 128, 185, 0.6);
+}
+
+/* Body Layout */
+.gallery-hero-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    min-height: 460px;
+    align-items: stretch;
+}
+
+/* Image Holder for Hero Shared Animation */
+.gallery-hero-img-wrapper {
+    position: relative;
+    background: #060b13;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+    border-radius: 20px 0 0 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+.gallery-hero-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.25s ease, transform 0.3s ease;
+}
+.gallery-hero-img-wrapper img.switching {
+    opacity: 0.3;
+    transform: scale(0.97);
+}
+.gallery-hero-img-shine {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 40%);
+}
+
+/* Info Panel */
+.gallery-hero-info {
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(160deg, rgba(20, 35, 60, 0.5) 0%, rgba(10, 18, 32, 0.8) 100%);
+}
+.gallery-hero-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.gallery-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #5dade2;
+    background: rgba(41, 128, 185, 0.18);
+    border: 1px solid rgba(41, 128, 185, 0.35);
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.gallery-hero-counter {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+.gallery-hero-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 14px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.gallery-hero-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), rgba(41, 128, 185, 0.2));
+    border-radius: 3px;
+    margin-bottom: 18px;
+}
+.gallery-hero-desc-scroll {
+    flex-grow: 1;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-bottom: 20px;
+}
+.gallery-hero-desc-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+.gallery-hero-desc-scroll::-webkit-scrollbar-thumb {
+    background: rgba(41, 128, 185, 0.4);
+    border-radius: 4px;
+}
+.gallery-hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(220, 230, 242, 0.88);
+}
+.gallery-hero-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.gallery-hero-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+.gallery-hero-tip {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 900px) {
+    .gallery-hero-body {
+        grid-template-columns: 1fr;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+    .gallery-hero-img-wrapper {
+        border-radius: 20px 20px 0 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        min-height: 280px;
+        max-height: 320px;
+    }
+    .gallery-hero-img-wrapper img {
+        max-height: 320px;
+    }
+    .gallery-hero-info {
+        padding: 24px 20px;
+    }
+    .gallery-hero-nav.prev { left: 10px; }
+    .gallery-hero-nav.next { right: 10px; }
+}
+
 @media (max-width: 768px) {
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    .gallery-hero-container {
+        padding: 12px;
+    }
+    .gallery-hero-title {
+        font-size: 1.2rem;
+    }
+    .gallery-hero-tip {
+        display: none;
     }
 }
 @media (max-width: 480px) {
     .gallery-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .gallery-hero-img-wrapper {
+        min-height: 220px;
+        max-height: 240px;
+    }
+    .gallery-hero-img-wrapper img {
+        max-height: 240px;
+    }
+    .gallery-hero-info {
+        padding: 18px 16px;
+    }
+    .gallery-hero-title {
+        font-size: 1.1rem;
+    }
+    .gallery-hero-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
     }
 }
+
