@@ -8,7 +8,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // --- 1. SPA PAGE TOGGLING ---
     const aboutNavLink = document.getElementById('nav-about-pikr');
     const berandaNavLink = document.querySelector('.nav-links a[href="#hero"]');
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             aboutOverlay.classList.add('about-visible');
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
-        
+
         // Sembunyikan elemen halaman utama
         homepageElements.forEach(el => {
             if (el) el.style.display = 'none';
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 2. TYPING EFFECT (HERO UTAMA & HERO ABOUT) ---
-    
+
     // Typing Effect pada Hero Utama (Sub-title)
     const heroSubtitleEl = document.querySelector('.hero-subtitle');
     if (heroSubtitleEl) {
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const textToType = "Kenali bahayanya, lindungi masa depanmu. Jangan biarkan narkoba merenggut mimpimu.";
         heroSubtitleEl.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
         const typingSpan = heroSubtitleEl.querySelector('.typing-text');
-        
+
         let charIndex = 0;
         function typeHeroSubtitle() {
             if (charIndex < textToType.length) {
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(typeHeroSubtitle, 40);
             }
         }
-        
+
         // Mulai typing effect dengan delay kecil
         setTimeout(typeHeroSubtitle, 2000);
     }
@@ -137,17 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Typing Effect pada Hero About
     const aboutTitleSpan = document.getElementById('about-typed-title');
     let aboutTypingInterval = null;
-    
+
     function startAboutTypingEffect() {
         if (!aboutTitleSpan) return;
-        
+
         // Hentikan interval lama jika ada
         if (aboutTypingInterval) clearInterval(aboutTypingInterval);
-        
+
         const text = "PIK-R JP ONE";
         aboutTitleSpan.textContent = "";
         let index = 0;
-        
+
         aboutTypingInterval = setInterval(() => {
             if (index < text.length) {
                 aboutTitleSpan.textContent += text.charAt(index);
@@ -190,10 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const question = item.querySelector('.faq-question');
         question.addEventListener('click', () => {
             const isOpen = item.classList.contains('faq-open');
-            
+
             // Tutup semua item FAQ lainnya terlebih dahulu
             faqItems.forEach(i => i.classList.remove('faq-open'));
-            
+
             // Jika sebelumnya tertutup, maka buka
             if (!isOpen) {
                 item.classList.add('faq-open');
@@ -217,13 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 // Tambahkan class ao-animated saat masuk viewport
                 entry.target.classList.add('ao-animated');
-                
+
                 // Trigger counter jika section stats terlihat
                 if (entry.target === statSection && !hasCounted) {
                     runCounters();
                     hasCounted = true;
                 }
-                
+
                 observer.unobserve(entry.target);
             }
         });
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     aoElements.forEach(el => {
         aoObserver.observe(el);
     });
-    
+
     if (statSection) {
         aoObserver.observe(statSection);
     }
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
             galleryTag.innerHTML = `<i class="fa-solid fa-camera-retro"></i> ${currentItem.getAttribute('data-tag') || 'Dokumentasi'}`;
         }
         if (galleryDesc) {
-            galleryDesc.textContent = currentItem.getAttribute('data-desc') || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+            galleryDesc.textContent = currentItem.getAttribute('data-desc') || 'bisaaaaaa';
         }
         if (galleryCounter) {
             galleryCounter.textContent = `Foto ${index + 1} / ${galleryItems.length}`;
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     galleryTag.innerHTML = `<i class="fa-solid fa-camera-retro"></i> ${targetItem.getAttribute('data-tag') || 'Dokumentasi'}`;
                 }
                 if (galleryDesc) {
-                    galleryDesc.textContent = targetItem.getAttribute('data-desc') || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+                    galleryDesc.textContent = targetItem.getAttribute('data-desc') || 'Dokumentasi kegiatan dan aksi nyata pengurus serta kader PIK-R JP ONE.';
                 }
                 if (galleryCounter) {
                     galleryCounter.textContent = `Foto ${newIndex + 1} / ${galleryItems.length}`;
